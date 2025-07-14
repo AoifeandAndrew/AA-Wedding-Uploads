@@ -11,26 +11,25 @@
   <style>
     body {
       font-family: 'Quicksand', sans-serif;
-      text-align: center;
       background: linear-gradient(to bottom, #fdf6f0, #ffeae0);
       padding: 40px;
       color: #4a4a4a;
-      position: relative;
       overflow-x: hidden;
-      opacity: 0;
-      animation: fadeIn ease 1.5s forwards;
+      margin: 0;
     }
 
-    @keyframes fadeIn {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
+    .main-content, .form-screen {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+      transition: opacity 0.5s ease;
     }
 
     h1 {
       font-family: 'Great Vibes', cursive;
       font-size: 3em;
-      margin-bottom: 10px;
       color: #d45d79;
+      margin-bottom: 10px;
     }
 
     .quote {
@@ -41,13 +40,12 @@
     }
 
     img {
-      display: block;
-      margin: 0 auto 20px auto;
       max-width: 90%;
       height: auto;
       border: 5px solid #ffcccc;
       border-radius: 16px;
       box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      margin-bottom: 20px;
     }
 
     p {
@@ -55,7 +53,7 @@
       margin: 20px 0;
     }
 
-    .upload-button {
+    .upload-button, .back-button {
       padding: 14px 30px;
       font-size: 1.1em;
       background-color: #ff89a7;
@@ -66,10 +64,10 @@
       box-shadow: 0 4px 6px rgba(0,0,0,0.2);
       cursor: pointer;
       transition: background-color 0.3s, transform 0.2s;
-      z-index: 2;
+      margin-top: 20px;
     }
 
-    .upload-button:hover {
+    .upload-button:hover, .back-button:hover {
       background-color: #e06385;
       transform: scale(1.05);
     }
@@ -81,86 +79,52 @@
       margin-top: 40px;
     }
 
-    /* 🌟 Modal Styling */
-    .modal {
+    .form-screen {
       display: none;
-      position: fixed;
-      z-index: 10;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background-color: rgba(0,0,0,0.7);
-    }
-
-    .modal-content {
-      background-color: #fff;
-      margin: 5% auto;
-      padding: 20px;
-      border-radius: 12px;
-      max-width: 700px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .close:hover {
-      color: #000;
     }
 
     iframe {
+      border: none;
+      border-radius: 12px;
       width: 100%;
       height: 900px;
-      border: none;
-      border-radius: 8px;
     }
   </style>
 </head>
 
 <body>
-  <h1>Aoife and Andrew's Wedding</h1>
-  <p class="quote">“Every love story is beautiful, but ours is my favorite.”</p>
-
-  <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
-  <p>Tap below to send us your favourite memories:</p>
-
-  <button class="upload-button" onclick="openModal()">Upload Photos</button>
-
-  <div id="uploadModal" class="modal">
-    <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <p style="font-size:1.1em;">Thanks for sharing your snaps with us! 🎉</p>
-      <iframe src="https://forms.gle/Fz8fFyiSb4XMdbWr5"></iframe>
-    </div>
+  <!-- 🌸 Main Wedding Page -->
+  <div class="main-content" id="mainPage">
+    <h1>Aoife and Andrew's Wedding</h1>
+    <p class="quote">“Every love story is beautiful, but ours is my favorite.”</p>
+    <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
+    <p>Tap below to send us your favourite memories:</p>
+    <button class="upload-button" onclick="showForm()">📷 Upload Photos</button>
+    <footer>
+      <p>You helped make our day unforgettable.<br>
+      Now let’s make it beautifully shareable.</p>
+    </footer>
   </div>
 
-  <footer>
-    <p>You helped make our day unforgettable.<br>
-    Now let’s make it beautifully shareable.</p>
-  </footer>
+  <!-- 💌 Upload Form Screen -->
+  <div class="form-screen" id="formPage">
+    <h1>Upload Your Memories</h1>
+    <p style="font-size:1.2em;">We’d love to see the moments you captured! 💞</p>
+    <iframe src="https://forms.gle/U7Pfh2X1BQ3JGSNT9"></iframe>
+    <button class="back-button" onclick="showMain()">← Go Back</button>
+  </div>
 
   <script>
-    function openModal() {
-      document.getElementById("uploadModal").style.display = "block";
+    function showForm() {
+      document.getElementById("mainPage").style.display = "none";
+      document.getElementById("formPage").style.display = "block";
+      window.scrollTo(0, 0);
     }
 
-    function closeModal() {
-      document.getElementById("uploadModal").style.display = "none";
-    }
-
-    // Optional: close modal on outside click
-    window.onclick = function(event) {
-      const modal = document.getElementById("uploadModal");
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
+    function showMain() {
+      document.getElementById("formPage").style.display = "none";
+      document.getElementById("mainPage").style.display = "block";
+      window.scrollTo(0, 0);
     }
   </script>
 </body>
