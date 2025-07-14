@@ -17,6 +17,15 @@
       color: #4a4a4a;
     }
 
+    body {
+  opacity: 0;
+  animation: fadeIn ease 1.5s forwards;
+}
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
     h1 {
       font-family: 'Great Vibes', cursive;
       font-size: 3em;
@@ -25,11 +34,13 @@
     }
 
     img {
-      max-width: 320px;
+      display: block;
+      margin: 0 auto 20px auto;
+      max-width: 90%;
+      height: auto;
       border: 5px solid #ffcccc;
       border-radius: 16px;
       box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-      margin-bottom: 20px;
     }
 
     p {
@@ -38,27 +49,28 @@
     }
 
     .upload-button {
-      padding: 12px 28px;
-      font-size: 1em;
-      background-color: #ff9aa2;
-      color: white;
-      font-weight: bold;
-      border: none;
-      border-radius: 30px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
+  padding: 14px 30px;
+  font-size: 1.1em;
+  background-color: #ff89a7;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 50px; /* Rounded for heart-like shape */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
 
-    .upload-button:hover {
-      background-color: #f76c6c;
-    }
+.upload-button:hover {
+  background-color: #e06385;
+  transform: scale(1.05);
+}
 
-    footer {
-      margin-top: 40px;
+    footer p {
+      font-size: 1.2em;
       font-style: italic;
-      color: #7a7a7a;
-      font-size: 1.1em;
+      color: #a86c6c;
+      margin-top: 40px;
     }
   </style>
 </head>
@@ -68,13 +80,11 @@
   <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
   <p>Share your favourite snaps of the day!</p>
   <a href="YOUR_GOOGLE_FORM_LINK" target="_blank">
-    <button class="upload-button">Upload</button>
+    <button class="upload-button">❤️ Upload Your Memories</button>
   </a>
   <footer>
- <p style="font-size:1.2em; font-style:italic; color:#a86c6c; margin-top:40px;">
-    💗 You helped make our day unforgettable.<br>
-    Now let’s make it beautifully shareable.
-  </p>
+    <p>💗 You helped make our day unforgettable.<br>
+    Now let’s make it beautifully shareable.</p>
   </footer>
 </body>
 </html>
