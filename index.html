@@ -56,23 +56,56 @@
       margin: 20px 0;
     }
 
-    .upload-button {
-      padding: 14px 30px;
+    form {
+      margin-top: 20px;
+      background-color: #fff6f8;
+      padding: 20px;
+      border-radius: 16px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    input[type="file"] {
+      padding: 10px;
+      margin: 10px 0 20px;
+      font-size: 1em;
+    }
+
+    input[type="submit"] {
+      padding: 12px 28px;
       font-size: 1.1em;
       background-color: #ff89a7;
       color: white;
       font-weight: bold;
       border: none;
       border-radius: 30px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
       cursor: pointer;
       transition: background-color 0.3s, transform 0.2s;
-      z-index: 2;
     }
 
-    .upload-button:hover {
+    input[type="submit"]:hover {
       background-color: #e06385;
       transform: scale(1.05);
+    }
+
+    .fallback {
+      font-size: 1em;
+      margin-top: 20px;
+      background-color: #ffeef2;
+      padding: 15px;
+      border-radius: 12px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .fallback a {
+      color: #d45d79;
+      text-decoration: underline;
+      font-weight: bold;
     }
 
     footer p {
@@ -107,11 +140,21 @@
   <p class="quote">“To me, you are perfect.”</p>
 
   <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
-  <p>We’d love to see the moments you captured. Tap below to share your memories:</p>
+  <p>We’d love to see the moments you captured. Upload your photo below:</p>
 
-  <a href="https://drive.google.com/drive/folders/1zYTWg40hdmPQqJw4-1bAB1kdDSa29pLMEeGz2J6LRYvFUZm5H8WCZ0lyPkivNtoRdmMzRA_z?usp=drive_link" target="_blank">
-    <button class="upload-button">📷 Upload Photos</button>
-  </a>
+  <form action="https://formsubmit.co/andrewandaoifegethitched@gmail.com" method="POST" enctype="multipart/form-data">
+    <input type="file" name="file" accept="image/*" required>
+    <input type="submit" value="📷 Send Photo">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_subject" value="Wedding Photo Upload">
+    <input type="hidden" name="_next" value="https://yourthankyoupage.com">
+  </form>
+
+  <div class="fallback">
+    Prefer to email us directly?<br>
+    Send your favourite snaps to:  
+    <a href="mailto:andrewandaoifegethitched@gmail.com">andrewandaoifegethitched@gmail.com</a>
+  </div>
 
   <footer>
     <p>You helped make our day unforgettable.<br>
