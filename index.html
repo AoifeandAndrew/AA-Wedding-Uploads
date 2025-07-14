@@ -55,47 +55,24 @@
       margin: 20px 0;
     }
 
-    .heart-button {
-      position: relative;
-      width: 100px;
-      height: 90px;
+    .upload-button {
+      padding: 14px 30px;
+      font-size: 1.1em;
       background-color: #ff89a7;
-      border: none;
-      cursor: pointer;
-      transform: rotate(-45deg);
-      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-      display: inline-block;
-    }
-
-    .heart-button::before,
-    .heart-button::after {
-      content: "";
-      position: absolute;
-      width: 100px;
-      height: 90px;
-      background-color: #ff89a7;
-      border-radius: 50%;
-    }
-
-    .heart-button::before {
-      top: -50px;
-      left: 0;
-    }
-
-    .heart-button::after {
-      left: 50px;
-      top: 0;
-    }
-
-    .heart-button span {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: rotate(45deg) translate(-50%, -50%);
       color: white;
       font-weight: bold;
-      font-size: 0.9em;
-      font-family: 'Quicksand', sans-serif;
+      border: none;
+      border-radius: 30px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      position: relative;
+      z-index: 2;
+    }
+
+    .upload-button:hover {
+      background-color: #e06385;
+      transform: scale(1.05);
     }
 
     footer p {
@@ -105,20 +82,23 @@
       margin-top: 40px;
     }
 
-    /* 🎈 Floating Hearts Animation */
-    .floating-heart {
+    /* ✨ Sparkle Drift Animation */
+    .sparkle {
       position: absolute;
-      bottom: -40px;
-      font-size: 1.5em;
-      animation: floatUp 6s infinite ease-in;
-      color: #ff89a7;
-      opacity: 0.7;
+      bottom: 0;
+      width: 8px;
+      height: 8px;
+      background-color: #ffcad4;
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: sparkleUp 3.5s ease-in forwards;
+      z-index: 1;
     }
 
-    @keyframes floatUp {
-      0% { transform: translateY(0) scale(1); opacity: 0.7; }
-      50% { opacity: 1; }
-      100% { transform: translateY(-600px) scale(1.2); opacity: 0; }
+    @keyframes sparkleUp {
+      0% { transform: translateY(0) scale(1); opacity: 0.6; }
+      60% { opacity: 1; }
+      100% { transform: translateY(-260px) scale(1.2); opacity: 0; }
     }
   </style>
 </head>
@@ -130,20 +110,27 @@
   <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
   <p>Share your favourite snaps of the day!</p>
 
-  <a href="https://forms.gle/2FSXCYBpjHhMQGWz6" target="_blank">
-    <div class="heart-button"><span>Upload</span></div>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLScssTV5EXIdOEGUxRGiCojiQQ42XFvwlw3Fby7EtjwiZmyULw/viewform?usp=header" target="_blank">
+    <button class="upload-button"> Upload </button>
   </a>
 
   <footer>
-    <p>You helped make our day unforgettable.<br>
+    <p>💗 You helped make our day unforgettable.<br>
     Now let’s make it beautifully shareable.</p>
   </footer>
 
-  <!-- 💫 Floating hearts container -->
-  <div class="floating-heart" style="left:10%;">💗</div>
-  <div class="floating-heart" style="left:30%; animation-delay:1s;">💞</div>
-  <div class="floating-heart" style="left:50%; animation-delay:2s;">💕</div>
-  <div class="floating-heart" style="left:70%; animation-delay:3s;">💖</div>
-  <div class="floating-heart" style="left:85%; animation-delay:4s;">❤️</div>
+  <!-- ✨ Sparkle generator script -->
+  <div id="sparkle-container"></div>
+  <script>
+    const container = document.getElementById("sparkle-container");
+    function createSparkle() {
+      const sparkle = document.createElement("div");
+      sparkle.classList.add("sparkle");
+      sparkle.style.left = `${Math.random() * 100}%`;
+      container.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 4000);
+    }
+    setInterval(createSparkle, 600);
+  </script>
 </body>
 </html>
