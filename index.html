@@ -66,7 +66,6 @@
       box-shadow: 0 4px 6px rgba(0,0,0,0.2);
       cursor: pointer;
       transition: background-color 0.3s, transform 0.2s;
-      position: relative;
       z-index: 2;
     }
 
@@ -82,55 +81,87 @@
       margin-top: 40px;
     }
 
-    /* ✨ Sparkle Drift Animation */
-    .sparkle {
-      position: absolute;
-      bottom: 0;
-      width: 8px;
-      height: 8px;
-      background-color: #ffcad4;
-      border-radius: 50%;
-      opacity: 0.6;
-      animation: sparkleUp 3.5s ease-in forwards;
-      z-index: 1;
+    /* 🌟 Modal Styling */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: rgba(0,0,0,0.7);
     }
 
-    @keyframes sparkleUp {
-      0% { transform: translateY(0) scale(1); opacity: 0.6; }
-      60% { opacity: 1; }
-      100% { transform: translateY(-260px) scale(1.2); opacity: 0; }
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 700px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: #000;
+    }
+
+    iframe {
+      width: 100%;
+      height: 900px;
+      border: none;
+      border-radius: 8px;
     }
   </style>
 </head>
 
 <body>
   <h1>Aoife and Andrew's Wedding</h1>
-  <p class="quote">"To me, you are perfect."</p>
+  <p class="quote">“Every love story is beautiful, but ours is my favorite.”</p>
 
   <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
-  <p>Share your favourite snaps of the day!</p>
+  <p>Tap below to send us your favourite memories:</p>
 
-  <a href="https://docs.google.com/forms/d/e/1FAIpQLScssTV5EXIdOEGUxRGiCojiQQ42XFvwlw3Fby7EtjwiZmyULw/viewform?usp=header" target="_blank">
-    <button class="upload-button"> Upload </button>
-  </a>
+  <button class="upload-button" onclick="openModal()">Upload Photos</button>
+
+  <div id="uploadModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <p style="font-size:1.1em;">Thanks for sharing your snaps with us! 🎉</p>
+      <iframe src="https://forms.gle/Fz8fFyiSb4XMdbWr5"></iframe>
+    </div>
+  </div>
 
   <footer>
     <p>You helped make our day unforgettable.<br>
     Now let’s make it beautifully shareable.</p>
   </footer>
 
-  <!-- ✨ Sparkle generator script -->
-  <div id="sparkle-container"></div>
   <script>
-    const container = document.getElementById("sparkle-container");
-    function createSparkle() {
-      const sparkle = document.createElement("div");
-      sparkle.classList.add("sparkle");
-      sparkle.style.left = `${Math.random() * 100}%`;
-      container.appendChild(sparkle);
-      setTimeout(() => sparkle.remove(), 4000);
+    function openModal() {
+      document.getElementById("uploadModal").style.display = "block";
     }
-    setInterval(createSparkle, 600);
+
+    function closeModal() {
+      document.getElementById("uploadModal").style.display = "none";
+    }
+
+    // Optional: close modal on outside click
+    window.onclick = function(event) {
+      const modal = document.getElementById("uploadModal");
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
   </script>
 </body>
 </html>
