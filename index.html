@@ -15,22 +15,29 @@
       background: linear-gradient(to bottom, #fdf6f0, #ffeae0);
       padding: 40px;
       color: #4a4a4a;
+      position: relative;
+      overflow-x: hidden;
+      opacity: 0;
+      animation: fadeIn ease 1.5s forwards;
     }
 
-    body {
-  opacity: 0;
-  animation: fadeIn ease 1.5s forwards;
-}
-@keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
 
     h1 {
       font-family: 'Great Vibes', cursive;
       font-size: 3em;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       color: #d45d79;
+    }
+
+    .quote {
+      font-size: 1.1em;
+      font-style: italic;
+      color: #7a7a7a;
+      margin-bottom: 25px;
     }
 
     img {
@@ -48,23 +55,48 @@
       margin: 20px 0;
     }
 
-    .upload-button {
-  padding: 14px 30px;
-  font-size: 1.1em;
-  background-color: #ff89a7;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 50px; /* Rounded for heart-like shape */
-  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-}
+    .heart-button {
+      position: relative;
+      width: 100px;
+      height: 90px;
+      background-color: #ff89a7;
+      border: none;
+      cursor: pointer;
+      transform: rotate(-45deg);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      display: inline-block;
+    }
 
-.upload-button:hover {
-  background-color: #e06385;
-  transform: scale(1.05);
-}
+    .heart-button::before,
+    .heart-button::after {
+      content: "";
+      position: absolute;
+      width: 100px;
+      height: 90px;
+      background-color: #ff89a7;
+      border-radius: 50%;
+    }
+
+    .heart-button::before {
+      top: -50px;
+      left: 0;
+    }
+
+    .heart-button::after {
+      left: 50px;
+      top: 0;
+    }
+
+    .heart-button span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: rotate(45deg) translate(-50%, -50%);
+      color: white;
+      font-weight: bold;
+      font-size: 0.9em;
+      font-family: 'Quicksand', sans-serif;
+    }
 
     footer p {
       font-size: 1.2em;
@@ -72,19 +104,46 @@
       color: #a86c6c;
       margin-top: 40px;
     }
+
+    /* 🎈 Floating Hearts Animation */
+    .floating-heart {
+      position: absolute;
+      bottom: -40px;
+      font-size: 1.5em;
+      animation: floatUp 6s infinite ease-in;
+      color: #ff89a7;
+      opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 0.7; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-600px) scale(1.2); opacity: 0; }
+    }
   </style>
 </head>
 
 <body>
   <h1>Aoife and Andrew's Wedding</h1>
+  <p class="quote">“Every love story is beautiful, but ours is my favorite.”</p>
+
   <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
   <p>Share your favourite snaps of the day!</p>
-  <a href="YOUR_GOOGLE_FORM_LINK" target="_blank">
-    <button class="upload-button">❤️ Upload Your Memories</button>
+
+  <a href="https://forms.gle/2FSXCYBpjHhMQGWz6" target="_blank">
+    <div class="heart-button"><span>Upload</span></div>
   </a>
+
   <footer>
-    <p>💗 You helped make our day unforgettable.<br>
+    <p>You helped make our day unforgettable.<br>
     Now let’s make it beautifully shareable.</p>
   </footer>
+
+  <!-- 💫 Floating hearts container -->
+  <div class="floating-heart" style="left:10%;">💗</div>
+  <div class="floating-heart" style="left:30%; animation-delay:1s;">💞</div>
+  <div class="floating-heart" style="left:50%; animation-delay:2s;">💕</div>
+  <div class="floating-heart" style="left:70%; animation-delay:3s;">💖</div>
+  <div class="floating-heart" style="left:85%; animation-delay:4s;">❤️</div>
 </body>
 </html>
