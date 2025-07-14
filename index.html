@@ -11,41 +11,44 @@
   <style>
     body {
       font-family: 'Quicksand', sans-serif;
+      text-align: center;
       background: linear-gradient(to bottom, #fdf6f0, #ffeae0);
       padding: 40px;
       color: #4a4a4a;
+      position: relative;
       overflow-x: hidden;
       margin: 0;
+      opacity: 0;
+      animation: fadeIn ease 1.5s forwards;
     }
 
-    .main-content, .form-screen {
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: center;
-      transition: opacity 0.5s ease;
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
     }
 
     h1 {
       font-family: 'Great Vibes', cursive;
       font-size: 3em;
-      color: #d45d79;
       margin-bottom: 10px;
+      color: #d45d79;
     }
 
     .quote {
-      font-size: 1.1em;
+      font-size: 1.2em;
       font-style: italic;
       color: #7a7a7a;
       margin-bottom: 25px;
     }
 
     img {
+      display: block;
+      margin: 0 auto 20px auto;
       max-width: 90%;
       height: auto;
       border: 5px solid #ffcccc;
       border-radius: 16px;
       box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-      margin-bottom: 20px;
     }
 
     p {
@@ -53,7 +56,7 @@
       margin: 20px 0;
     }
 
-    .upload-button, .back-button {
+    .upload-button {
       padding: 14px 30px;
       font-size: 1.1em;
       background-color: #ff89a7;
@@ -64,10 +67,10 @@
       box-shadow: 0 4px 6px rgba(0,0,0,0.2);
       cursor: pointer;
       transition: background-color 0.3s, transform 0.2s;
-      margin-top: 20px;
+      z-index: 2;
     }
 
-    .upload-button:hover, .back-button:hover {
+    .upload-button:hover {
       background-color: #e06385;
       transform: scale(1.05);
     }
@@ -79,53 +82,54 @@
       margin-top: 40px;
     }
 
-    .form-screen {
-      display: none;
+    .sparkle {
+      position: absolute;
+      bottom: 0;
+      width: 8px;
+      height: 8px;
+      background-color: #ffcad4;
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: sparkleUp 3.5s ease-in forwards;
+      z-index: 1;
     }
 
-    iframe {
-      border: none;
-      border-radius: 12px;
-      width: 100%;
-      height: 900px;
+    @keyframes sparkleUp {
+      0% { transform: translateY(0) scale(1); opacity: 0.6; }
+      60% { opacity: 1; }
+      100% { transform: translateY(-260px) scale(1.2); opacity: 0; }
     }
   </style>
 </head>
 
 <body>
-  <!-- 🌸 Main Wedding Page -->
-  <div class="main-content" id="mainPage">
-    <h1>Aoife and Andrew's Wedding</h1>
-    <p class="quote">“Every love story is beautiful, but ours is my favorite.”</p>
-    <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
-    <p>Tap below to send us your favourite memories:</p>
-    <button class="upload-button" onclick="showForm()">📷 Upload Photos</button>
-    <footer>
-      <p>You helped make our day unforgettable.<br>
-      Now let’s make it beautifully shareable.</p>
-    </footer>
-  </div>
+  <h1>Aoife and Andrew's Wedding</h1>
+  <p class="quote">“To me, you are perfect.”</p>
 
-  <!-- 💌 Upload Form Screen -->
-  <div class="form-screen" id="formPage">
-    <h1>Upload Your Memories</h1>
-    <p style="font-size:1.2em;">We’d love to see the moments you captured! 💞</p>
-    <iframe src="https://forms.gle/U7Pfh2X1BQ3JGSNT9"></iframe>
-    <button class="back-button" onclick="showMain()">← Go Back</button>
-  </div>
+  <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
+  <p>We’d love to see the moments you captured. Tap below to share your memories:</p>
 
+  <a href="https://drive.google.com/drive/folders/1zYTWg40hdmPQqJw4-1bAB1kdDSa29pLMEeGz2J6LRYvFUZm5H8WCZ0lyPkivNtoRdmMzRA_z?usp=drive_link" target="_blank">
+    <button class="upload-button">📷 Upload Photos</button>
+  </a>
+
+  <footer>
+    <p>You helped make our day unforgettable.<br>
+    Now let’s make it beautifully shareable.</p>
+  </footer>
+
+  <!-- ✨ Sparkle generator script -->
+  <div id="sparkle-container"></div>
   <script>
-    function showForm() {
-      document.getElementById("mainPage").style.display = "none";
-      document.getElementById("formPage").style.display = "block";
-      window.scrollTo(0, 0);
+    const container = document.getElementById("sparkle-container");
+    function createSparkle() {
+      const sparkle = document.createElement("div");
+      sparkle.classList.add("sparkle");
+      sparkle.style.left = `${Math.random() * 100}%`;
+      container.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 4000);
     }
-
-    function showMain() {
-      document.getElementById("formPage").style.display = "none";
-      document.getElementById("mainPage").style.display = "block";
-      window.scrollTo(0, 0);
-    }
+    setInterval(createSparkle, 600);
   </script>
 </body>
 </html>
