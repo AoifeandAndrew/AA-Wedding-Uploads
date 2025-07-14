@@ -51,41 +51,30 @@
       box-shadow: 0 8px 16px rgba(0,0,0,0.15);
     }
 
-    p {
-      font-size: 1.2em;
-      margin: 20px 0;
-    }
-
-    form {
-      margin-top: 20px;
+    .upload-section {
       background-color: #fff6f8;
-      padding: 20px;
+      padding: 30px;
       border-radius: 16px;
       max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin: 0 auto 30px auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      font-size: 1.2em;
     }
 
-    input[type="file"] {
-      padding: 10px;
-      margin: 10px 0 20px;
-      font-size: 1em;
-    }
-
-    input[type="submit"] {
-      padding: 12px 28px;
+    .upload-button {
+      padding: 14px 30px;
       font-size: 1.1em;
       background-color: #ff89a7;
       color: white;
       font-weight: bold;
       border: none;
       border-radius: 30px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.15);
       cursor: pointer;
       transition: background-color 0.3s, transform 0.2s;
     }
 
-    input[type="submit"]:hover {
+    .upload-button:hover {
       background-color: #e06385;
       transform: scale(1.05);
     }
@@ -141,20 +130,18 @@
   <p class="quote">“To me, you are perfect.”</p>
 
   <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
-  <p>We’d love to see the moments you captured. Upload your photo below:</p>
 
-  <form action="https://formsubmit.co/andrewandaoifegethitched@gmail.com" method="POST" enctype="multipart/form-data">
-    <input type="file" name="file" accept="image/*" required>
-    <input type="submit" value="📷 Send Photo">
-    <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_subject" value="Wedding Photo Upload">
-    <input type="hidden" name="_next" value="https://aoifeandandrew.github.io/AA-wedding-uploads/thankyou.html">
-  </form>
+  <div class="upload-section">
+    <p>We’d love to see the moments you captured. Click below to upload your photos:</p>
+    <a href="https://forms.gle/7piZnSNnwU6dUoA98" target="_blank">
+      <button class="upload-button">Upload</button>
+    </a>
 
-  <div class="fallback">
-    Prefer to email us directly?<br>
-    Send your favourite snaps to:  
-    <a href="mailto:andrewandaoifegethitched@gmail.com">andrewandaoifegethitched@gmail.com</a>
+    <div class="fallback">
+      If you’re having trouble uploading or prefer to email them instead,<br>
+      please send your snaps to:  
+      <a href="mailto:andrewandaoifegethitched@gmail.com">andrewandaoifegethitched@gmail.com</a>
+    </div>
   </div>
 
   <footer>
