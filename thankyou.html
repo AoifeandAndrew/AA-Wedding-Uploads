@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thank You!</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      text-align: center;
+      background: linear-gradient(to bottom, #fffaf7, #ffeae0);
+      padding: 40px;
+      color: #4a4a4a;
+      position: relative;
+      overflow-x: hidden;
+      margin: 0;
+      opacity: 0;
+      animation: fadeIn ease 1.5s forwards;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3em;
+      margin-bottom: 15px;
+      color: #d45d79;
+    }
+
+    .message {
+      font-size: 1.2em;
+      margin: 20px auto;
+      max-width: 600px;
+      background-color: #fff6f8;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .gif-container {
+      margin: 30px auto;
+    }
+
+    .gif-container img {
+      max-width: 320px;
+      width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    a.button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 28px;
+      background-color: #ff89a7;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 30px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    a.button:hover {
+      background-color: #e06385;
+      transform: scale(1.05);
+    }
+
+    footer {
+      margin-top: 40px;
+      font-style: italic;
+      color: #a86c6c;
+      font-size: 1.1em;
+    }
+
+    .sparkle {
+      position: absolute;
+      bottom: 0;
+      width: 8px;
+      height: 8px;
+      background-color: #ffcad4;
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: sparkleUp 3.5s ease-in forwards;
+      z-index: 1;
+    }
+
+    @keyframes sparkleUp {
+      0% { transform: translateY(0) scale(1); opacity: 0.6; }
+      60% { opacity: 1; }
+      100% { transform: translateY(-260px) scale(1.2); opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Thank You!</h1>
+  <div class="message">
+    Your photo has been received and it means the world to us. 🥰<br><br>
+    Thank you for helping us relive the joy, laughter, and love that filled our special day.
+  </div>
+
+  <div class="gif-container">
+    <img src="https://media.giphy.com/media/3ohhwGEwCuBa3aCq7u/giphy.gif" alt="Just Married GIF">
+  </div>
+
+  <a class="button" href="index.html">⏮ Back to Main Page</a>
+
+  <footer>
+    💖 Every memory shared is a treasure we'll hold close forever.
+  </footer>
+
+  <!-- ✨ Sparkle generator script -->
+  <div id="sparkle-container"></div>
+  <script>
+    const container = document.getElementById("sparkle-container");
+    function createSparkle() {
+      const sparkle = document.createElement("div");
+      sparkle.classList.add("sparkle");
+      sparkle.style.left = `${Math.random() * 100}%`;
+      container.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 4000);
+    }
+    setInterval(createSparkle, 600);
+  </script>
+</body>
+</html>
