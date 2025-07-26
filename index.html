@@ -136,9 +136,6 @@
       100% { transform: translateY(-260px) scale(1.2); opacity: 0; }
     }
   </style>
-
-  <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
-
 </head>
 
 <body>
@@ -147,25 +144,28 @@
 
   <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
 
-  <input type="hidden"
-  role="uploadcare-uploader"
-  data-public-key="3b40f052cbecd284b7d1"
-  data-multiple="true"
-  data-tabs="file camera"
-  data-images-only="false"
-  data-crop="disabled"
-  data-clearable="true"
-/>
-
-  <script>
-  uploadcare.registerTab('preview', function() {});
-  const widget = uploadcare.Widget('[role=uploadcare-uploader]');
-  widget.onUploadComplete(function(fileInfo) {
-    window.location.href = "thankyou.html";
-  });
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/uc-file-uploader-regular.min.css"
+>
+<script type="module">
+  import * as UC from 'https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/uc-file-uploader-regular.min.js';
+  UC.defineComponents(UC);
 </script>
 
-  
+<uc-config
+  ctx-name="my-uploader"
+  source-list="local, camera, facebook, gdrive"
+  pubkey="3b40f052cbecd284b7d1"
+></uc-config>
+
+<uc-file-uploader-regular
+  ctx-name="my-uploader"
+  class="uc-light"
+></uc-file-uploader-regular>
+
+<uc-upload-ctx-provider ctx-name="my-uploader"></uc-upload-ctx-provider>
+
   <div class="upload-section">
     <p>We’d love to see the moments you captured.</p>
     <a href="https://forms.gle/7piZnSNnwU6dUoA98" target="_blank">
