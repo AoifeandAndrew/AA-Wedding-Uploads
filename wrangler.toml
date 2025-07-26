@@ -1,3 +1,3 @@
-name = "r2-presigner"
+name = "uploader"
 main = "src/index.js"
 compatibility_date = "2025-07-26"
