@@ -34,6 +34,8 @@
       color: #d45d79;
     }
 
+<script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+    
     .quote {
       font-size: 1.2em;
       font-style: italic;
@@ -144,10 +146,24 @@
 
   <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
 
-  <form name="wedding-uploads" netlify>
-  <input type="file" name="file" />
-  <button type="submit">Upload</button>
-</form>
+  <input type="hidden"
+  role="uploadcare-uploader"
+  data-public-key="3b40f052cbecd284b7d1"
+  data-multiple="true"
+  data-tabs="file camera"
+  data-images-only="false"
+  data-crop="disabled"
+  data-clearable="true"
+/>
+
+  <script>
+  uploadcare.registerTab('preview', function() {});
+  const widget = uploadcare.Widget('[role=uploadcare-uploader]');
+  widget.onUploadComplete(function(fileInfo) {
+    window.location.href = "thankyou.html";
+  });
+</script>
+
   
   <div class="upload-section">
     <p>We’d love to see the moments you captured.</p>
