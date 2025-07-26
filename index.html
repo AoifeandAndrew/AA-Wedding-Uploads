@@ -144,32 +144,31 @@
 
   <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
 
-  <div class="upload-section">
-    <p>We’d love to see the moments you captured.</p>
-    <a href="https://forms.gle/7piZnSNnwU6dUoA98" target="_blank">
-      <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/uc-file-uploader-regular.min.css"
->
-<script type="module">
-  import * as UC from 'https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/uc-file-uploader-regular.min.js';
-  UC.defineComponents(UC);
-</script>
+  <div class="upload-section" style="max-width: 600px; margin: 0 auto; padding: 2em 1em; text-align: center; font-family: serif;">
+  <p style="font-size: 1.2em; margin-bottom: 1em;">We’d love to see the moments you captured. Your memories mean the world to us.</p>
 
-<uc-config
-  ctx-name="my-uploader"
-  source-list="local, camera"
-  files-view-mode="grid"
-  pubkey="3b40f052cbecd284b7d1"
-></uc-config>
+  <!-- Uploadcare Uploader -->
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/uc-file-uploader-regular.min.css">
+  <script type="module">
+    import * as UC from 'https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/uc-file-uploader-regular.min.js';
+    UC.defineComponents(UC);
+  </script>
 
-<uc-file-uploader-regular
-  ctx-name="my-uploader"
-  class="uc-light"
-></uc-file-uploader-regular>
+  <uc-config
+    ctx-name="my-uploader"
+    source-list="local, camera"
+    files-view-mode="grid"
+    pubkey="3b40f052cbecd284b7d1"
+  ></uc-config>
 
-<uc-upload-ctx-provider ctx-name="my-uploader"></uc-upload-ctx-provider>
-    </a>
+  <uc-file-uploader-regular
+    ctx-name="my-uploader"
+    class="uc-light"
+  ></uc-file-uploader-regular>
+
+  <uc-upload-ctx-provider ctx-name="my-uploader"></uc-upload-ctx-provider>
+</div>
 
     <div class="fallback">
       If you’re having trouble uploading or prefer to email them instead,<br>
