@@ -145,12 +145,13 @@
   <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
 
 <!-- Uppy CSS -->
-<link href="https://releases.transloadit.com/uppy/v4.3.1/uppy.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@uppy/core@3.7.3/dist/style.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@uppy/dashboard@3.7.3/dist/style.min.css" rel="stylesheet">
 
 <!-- Uppy JS -->
 <script type="module">
-  import Uppy from 'https://releases.transloadit.com/uppy/v4.3.1/uppy.min.mjs';
-  import XHRUpload from 'https://releases.transloadit.com/uppy/v4.3.1/xhr-upload.min.mjs';
+  import Uppy from 'https://cdn.skypack.dev/@uppy/core@3.7.3';
+  import XHRUpload from 'https://cdn.skypack.dev/@uppy/xhr-upload@3.7.3';
 
   const uppy = new Uppy({
     restrictions: {
@@ -175,12 +176,13 @@
     }
   });
 
-  uppy.on('complete', (result) => {
-    alert('Thank you! Your memory has been uploaded. 🖤');
+  uppy.on('complete', () => {
+    alert('🖤 Your memory has been uploaded. Thank you!');
   });
 
   uppy.mount('#upload-area');
 </script>
+
 
 <div id="upload-area" style="max-width: 400px; margin: auto; padding: 1rem;"></div>
 
