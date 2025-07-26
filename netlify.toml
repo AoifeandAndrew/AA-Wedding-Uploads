@@ -1,0 +1,5 @@
+[build]
+  publish = "path/to/your/site/root"
+  
+[[plugins]]
+  package = "@netlify/plugin-functions"
