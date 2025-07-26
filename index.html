@@ -153,30 +153,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@uppy/core@3.7.3/dist/uppy.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@uppy/xhr-upload@3.7.3/dist/uppy.min.js"></script>
 
-<script>
-  const uppy = new Uppy.Core({
-    restrictions: {
-      maxNumberOfFiles: 5,
-      allowedFileTypes: ['image/*'],
-    },
-    autoProceed: true,
-    allowMultipleUploadBatches: false
-  })
-  .use(Uppy.XHRUpload, {
-    getUploadParameters(file) {
-      return fetch(`https://ancient-fire-e0e0.andrewandaoifegethitched.workers.dev?filename=${encodeURIComponent(file.name)}`)
-        .then(res => res.json())
-        .then(data => ({
-          method: 'PUT',
-          endpoint: data.url,
-          headers: {
-            'x-amz-acl': 'public-read',
-            'x-amz-content-sha256': 'UNSIGNED-PAYLOAD'
-          }
-        }));
-    }
-  });
-
   uppy.on('complete', () => {
     alert('🖤 Your memory has been uploaded. Thank you!');
   });
@@ -222,5 +198,30 @@
     }
     setInterval(createSparkle, 600);
   </script>
+  
+<script>
+  const uppy = new Uppy.Core({
+    restrictions: {
+      maxNumberOfFiles: 5,
+      allowedFileTypes: ['image/*'],
+    },
+    autoProceed: true,
+    allowMultipleUploadBatches: false,
+  }).use(Uppy.XHRUpload, {
+    getUploadParameters(file) {
+      return fetch(`https://ancient-fire-e0e0.andrewandaoifegethitched.workers.dev?filename=${encodeURIComponent(file.name)}`)
+        .then(res => res.json())
+        .then(data => ({
+          method: 'PUT',
+          endpoint: data.url,
+          headers: {
+            'x-amz-acl': 'public-read',
+            'x-amz-content-sha256': 'UNSIGNED-PAYLOAD',
+          },
+        }));
+    },
+  });
+</script>
+
 </body>
 </html>
