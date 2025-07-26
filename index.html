@@ -8,87 +8,134 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
 
-  body {
-  font-family: 'Quicksand', sans-serif;
-  background: #fff;
-  color: #2b2b2b;
-  padding: 40px;
-  margin: 0;
-  text-align: center;
-  opacity: 0;
-  animation: fadeIn ease 1.5s forwards;
-}
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      text-align: center;
+      background: linear-gradient(to bottom, #fdf6f0, #ffeae0);
+      padding: 40px;
+      color: #4a4a4a;
+      position: relative;
+      overflow-x: hidden;
+      margin: 0;
+      opacity: 0;
+      animation: fadeIn ease 1.5s forwards;
+    }
 
-@keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
 
-h1 {
-  font-family: 'Great Vibes', cursive;
-  font-size: 3em;
-  margin-bottom: 10px;
-  color: #1e1e1e;
-}
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3em;
+      margin-bottom: 10px;
+      color: #d45d79;
+    }
 
-.quote {
-  font-size: 1.2em;
-  font-style: italic;
-  color: #4a4a4a;
-  margin-bottom: 25px;
-}
+    .quote {
+      font-size: 1.2em;
+      font-style: italic;
+      color: #7a7a7a;
+      margin-bottom: 25px;
+    }
 
-img {
-  display: block;
-  margin: 0 auto 20px auto;
-  max-width: 90%;
-  height: auto;
-  border: 4px solid #aaa;
+    img {
+      display: block;
+      margin: 0 auto 20px auto;
+      max-width: 90%;
+      height: auto;
+      border: 5px solid #ffcccc;
+      border-radius: 16px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }
+
+    .upload-section {
+      background-color: #fff6f8;
+      padding: 30px;
+      border-radius: 16px;
+      max-width: 600px;
+      margin: 0 auto 30px auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      font-size: 1.2em;
+    }
+
+    .upload-button {
+      padding: 14px 30px;
+      font-size: 1.1em;
+      background-color: #ff89a7;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 30px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .upload-button:hover {
+      background-color: #e06385;
+      transform: scale(1.05);
+    }
+
+    .fallback {
+      font-size: 1em;
+      margin-top: 20px;
+      background-color: #ffeef2;
+      padding: 15px;
+      border-radius: 12px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      word-break: break-word;
+    }
+
+    .fallback a {
+      color: #d45d79;
+      text-decoration: underline;
+      font-weight: bold;
+    }
+
+    .reminder {
+  background-color: #fdf6f0;
+  padding: 20px;
+  margin-top: 30px;
   border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-}
-
-.upload-section {
-  background-color: #fafafa;
-  padding: 30px;
-  border-radius: 16px;
-  max-width: 640px;
-  margin: 0 auto 30px auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   font-size: 1.2em;
-  border: 1px solid #ccc;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  word-break: break-word;
 }
 
-.upload-section p {
-  font-style: italic;
-  font-size: 1.2em;
-  color: #1e1e1e;
-}
+    footer p {
+      font-size: 1.2em;
+      font-style: italic;
+      color: #a86c6c;
+      margin-top: 40px;
+    }
 
-.fallback,
-.reminder {
-  background-color: #ffffff;
-  color: #2b2b2b;
-  border: 1px solid #ddd;
-  padding: 15px;
-  border-radius: 12px;
-  max-width: 640px;
-  margin: 30px auto;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
+    .sparkle {
+      position: absolute;
+      bottom: 0;
+      width: 8px;
+      height: 8px;
+      background-color: #ffcad4;
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: sparkleUp 3.5s ease-in forwards;
+      z-index: 1;
+    }
 
-.fallback a {
-  color: #000;
-  text-decoration: underline;
-  font-weight: bold;
-}
-
-footer p {
-  font-size: 1.2em;
-  font-style: italic;
-  color: #444;
-  margin-top: 40px;
-}
+    @keyframes sparkleUp {
+      0% { transform: translateY(0) scale(1); opacity: 0.6; }
+      60% { opacity: 1; }
+      100% { transform: translateY(-260px) scale(1.2); opacity: 0; }
+    }
+  </style>
 </head>
 
 <body>
@@ -97,31 +144,11 @@ footer p {
 
   <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
 
-  <div class="upload-section" style="max-width: 600px; margin: 0 auto; padding: 2em 1em; text-align: center; font-family: serif;">
-  <p style="font-size: 1.2em; margin-bottom: 1em;">We’d love to see the moments you captured. Your memories mean the world to us.</p>
-
-  <!-- Uploadcare Uploader -->
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/uc-file-uploader-regular.min.css">
-  <script type="module">
-    import * as UC from 'https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/uc-file-uploader-regular.min.js';
-    UC.defineComponents(UC);
-  </script>
-
-  <uc-config
-    ctx-name="my-uploader"
-    source-list="local, camera"
-    files-view-mode="grid"
-    pubkey="3b40f052cbecd284b7d1"
-  ></uc-config>
-
-  <uc-file-uploader-regular
-    ctx-name="my-uploader"
-    class="uc-light"
-  ></uc-file-uploader-regular>
-
-  <uc-upload-ctx-provider ctx-name="my-uploader"></uc-upload-ctx-provider>
-</div>
+  <div class="upload-section">
+    <p>We’d love to see the moments you captured.</p>
+    <a href="https://forms.gle/7piZnSNnwU6dUoA98" target="_blank">
+      <button class="upload-button">Upload Your Photos</button>
+    </a>
 
     <div class="fallback">
       If you’re having trouble uploading or prefer to email them instead,<br>
