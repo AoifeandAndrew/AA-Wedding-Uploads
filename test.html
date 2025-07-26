@@ -9,8 +9,7 @@
   <link href="https://cdn.jsdelivr.net/npm/@uppy/dashboard@3.7.3/dist/style.min.css" rel="stylesheet">
 
   <!-- Uppy CSS -->
-<link href="https://cdn.jsdelivr.net/npm/@uppy/core@3.7.3/dist/style.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/@uppy/dashboard@3.7.3/dist/style.min.css" rel="stylesheet">
+<link href="https://releases.transloadit.com/uppy/v4.18.0/uppy.min.css" rel="stylesheet" />
   
   <style>
     body {
@@ -37,10 +36,13 @@
   <div id="upload-area"></div>
 
   <!-- Uppy Scripts -->
- <!-- Uppy JS -->
-<script src="https://cdn.jsdelivr.net/npm/@uppy/core@3.7.3/dist/uppy.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@uppy/dashboard@3.7.3/dist/uppy.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@uppy/xhr-upload@3.7.3/dist/uppy.min.js"></script>
+<script type="module">
+  import { Uppy, Dashboard, Tus } from 'https://releases.transloadit.com/uppy/v4.18.0/uppy.min.mjs'
+
+  const uppy = new Uppy()
+  uppy.use(Dashboard, { target: '#files-drag-drop' })
+  uppy.use(Tus, { endpoint: 'https://tusd.tusdemo.net/files/' })
+</script>
 
 <script>
   const { Core, Dashboard, XHRUpload } = Uppy;
