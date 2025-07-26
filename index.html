@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aoife and Andrew's Wedding</title>
 
+<!-- Uppy Styles and Script (Legacy version for window.Uppy support) -->
+<link href="https://releases.transloadit.com/uppy/v2.12.3/uppy.min.css" rel="stylesheet">
+<script src="https://releases.transloadit.com/uppy/v2.12.3/uppy.min.js"></script>
+  
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
 
@@ -150,7 +154,6 @@
 <link href="https://releases.transloadit.com/uppy/v3.19.0/uppy.min.css" rel="stylesheet">
 <script src="https://releases.transloadit.com/uppy/v3.19.0/uppy.min.js"></script>
 
-<!-- Upload container -->
 <div id="upload-area" style="
   max-width: 90%;
   margin: 2rem auto;
@@ -161,22 +164,22 @@
   background: #fff;
   border: 1px solid #e6e6e6;
 ">
-  <h2 style="text-align:center; font-size:1.4rem; margin-bottom:0.75rem;">A little moment, forever yours 💌</h2>
+  <h2 style="text-align:center; font-size:1.4rem; margin-bottom:0.75rem;">We'd love to see the moments you captured. </h2>
   <p style="text-align:center; font-size:1rem; color:#444; margin-bottom:1.5rem;">
-    Share your favourite memory from the day—blur, sparkle, and laughter welcome.
+    Share your favourite memories from the day - blur, sparkle, and laughter welcome.
   </p>
 </div>
 
-<script>
+    <script>
   const uppy = new window.Uppy.Core({ restrictions: { maxNumberOfFiles: null } })
-    .use(Uppy.Dashboard, {
+    .use(window.Uppy.Dashboard, {
       inline: true,
       target: '#upload-area',
       note: "Upload your wedding snapshots—no login needed",
       proudlyDisplayPoweredByUppy: false,
       browserBackButtonClose: false,
     })
-    .use(Uppy.AwsS3, {
+    .use(window.Uppy.AwsS3, {
       companionUrl: "https://companion.uppy.io",
       companionAllowedHosts: ["https://pub-23079c0807f94e469b2285a04b433a4e.r2.dev"]
     });
