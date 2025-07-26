@@ -148,12 +148,13 @@
 <link href="https://cdn.jsdelivr.net/npm/@uppy/core@3.7.3/dist/style.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@uppy/dashboard@3.7.3/dist/style.min.css" rel="stylesheet">
 
-<!-- Uppy JS -->
-<script type="module">
-  import Uppy from 'https://cdn.skypack.dev/@uppy/core@3.7.3';
-  import XHRUpload from 'https://cdn.skypack.dev/@uppy/xhr-upload@3.7.3';
 
-  const uppy = new Uppy({
+<!-- Uppy JS -->
+<script src="https://cdn.jsdelivr.net/npm/@uppy/core@3.7.3/dist/uppy.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@uppy/xhr-upload@3.7.3/dist/uppy.min.js"></script>
+
+<script>
+  const uppy = new Uppy.Core({
     restrictions: {
       maxNumberOfFiles: 5,
       allowedFileTypes: ['image/*'],
@@ -161,7 +162,7 @@
     autoProceed: true,
     allowMultipleUploadBatches: false
   })
-  .use(XHRUpload, {
+  .use(Uppy.XHRUpload, {
     getUploadParameters(file) {
       return fetch(`https://ancient-fire-e0e0.andrewandaoifegethitched.workers.dev?filename=${encodeURIComponent(file.name)}`)
         .then(res => res.json())
