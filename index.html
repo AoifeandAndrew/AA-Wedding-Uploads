@@ -4,12 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aoife and Andrew's Wedding</title>
-
-  <!-- Uppy CSS -->
-  <link
-    href="https://releases.transloadit.com/uppy/v4.18.0/uppy.min.css"
-    rel="stylesheet"
-  />
   
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
@@ -150,44 +144,7 @@
 
   <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
 
-  <div class="upload-section">
-    <p>We’d love to see the moments you captured.</p>
-    <!-- Uppy CSS & JS -->
-<link href="https://releases.transloadit.com/uppy/v3.19.0/uppy.min.css" rel="stylesheet">
-<script src="https://releases.transloadit.com/uppy/v3.19.0/uppy.min.js"></script>
 
-<!-- Uppy Target -->
-  <div id="files-drag-drop"></div>
-
-  <!-- Uppy Initialization -->
-  <script type="module">
-    import {
-      Uppy,
-      Dashboard,
-      AwsS3,
-    } from 'https://releases.transloadit.com/uppy/v4.18.0/uppy.min.mjs'
-
-    const uppy = new Uppy()
-
-    uppy.use(Dashboard, {
-      target: '#files-drag-drop',
-      inline: true,
-      note: 'Drop your wedding snapshots—no login needed ✨',
-      proudlyDisplayPoweredByUppy: false,
-    })
-
-    uppy.use(AwsS3, {
-      companionUrl: 'https://companion.uppy.io',
-      companionAllowedHosts: [
-        'https://pub-23079c0807f94e469b2285a04b433a4e.r2.dev' // Your R2 public endpoint
-      ]
-    })
-
-    uppy.on('complete', (result) => {
-      console.log('Upload successful:', result.successful)
-      alert("Memory added! You've just contributed to the honeymoon archive 💌")
-    })
-  </script>
 
     <div class="fallback">
       If you’re having trouble uploading or prefer to email them instead,<br>
