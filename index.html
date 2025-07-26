@@ -144,7 +144,45 @@
 
   <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
 
+<!-- Uppy CSS -->
+<link href="https://releases.transloadit.com/uppy/v3.7.3/uppy.min.css" rel="stylesheet">
 
+<!-- Uppy JS -->
+<script type="module">
+  import Uppy from 'https://releases.transloadit.com/uppy/v3.7.3/uppy.min.mjs';
+  import XHRUpload from 'https://releases.transloadit.com/uppy/v3.7.3/xhr-upload.min.mjs';
+
+  const uppy = new Uppy({
+    restrictions: {
+      maxNumberOfFiles: 5,
+      allowedFileTypes: ['image/*'],
+    },
+    autoProceed: true,
+    allowMultipleUploadBatches: false
+  })
+  .use(XHRUpload, {
+    getUploadParameters(file) {
+      return fetch(`https://your-worker-url.workers.dev?filename=${encodeURIComponent(file.name)}`)
+        .then(res => res.json())
+        .then(data => ({
+          method: 'PUT',
+          endpoint: data.url,
+          headers: {
+            'x-amz-acl': 'public-read',
+            'x-amz-content-sha256': 'UNSIGNED-PAYLOAD'
+          }
+        }));
+    }
+  });
+
+  uppy.on('complete', (result) => {
+    alert('Thank you! Your memory has been uploaded. 🖤');
+  });
+
+  uppy.mount('#upload-area');
+</script>
+
+<div id="upload-area" style="max-width: 400px; margin: auto; padding: 1rem;"></div>
 
     <div class="fallback">
       If you’re having trouble uploading or prefer to email them instead,<br>
