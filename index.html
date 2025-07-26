@@ -144,7 +144,10 @@
 
   <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
 
-<link
+  <div class="upload-section">
+    <p>We’d love to see the moments you captured.</p>
+    <a href="https://forms.gle/7piZnSNnwU6dUoA98" target="_blank">
+      <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/uc-file-uploader-regular.min.css"
 >
@@ -155,7 +158,8 @@
 
 <uc-config
   ctx-name="my-uploader"
-  source-list="local, camera, facebook, gdrive"
+  source-list="local, camera"
+  files-view-mode="grid"
   pubkey="3b40f052cbecd284b7d1"
 ></uc-config>
 
@@ -165,11 +169,6 @@
 ></uc-file-uploader-regular>
 
 <uc-upload-ctx-provider ctx-name="my-uploader"></uc-upload-ctx-provider>
-
-  <div class="upload-section">
-    <p>We’d love to see the moments you captured.</p>
-    <a href="https://forms.gle/7piZnSNnwU6dUoA98" target="_blank">
-      <button class="upload-button">Upload Your Photos</button>
     </a>
 
     <div class="fallback">
