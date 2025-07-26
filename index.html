@@ -168,7 +168,7 @@
 </div>
 
 <script>
-  const uppy = new Uppy.Core({ restrictions: { maxNumberOfFiles: null } })
+  const uppy = new window.Uppy.Core({ restrictions: { maxNumberOfFiles: null } })
     .use(Uppy.Dashboard, {
       inline: true,
       target: '#upload-area',
