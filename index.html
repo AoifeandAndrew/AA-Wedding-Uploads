@@ -153,14 +153,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@uppy/core@3.7.3/dist/uppy.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@uppy/xhr-upload@3.7.3/dist/uppy.min.js"></script>
 
-  uppy.on('complete', () => {
-    alert('🖤 Your memory has been uploaded. Thank you!');
-  });
-
-  uppy.mount('#upload-area');
-</script>
-
-
 <div id="upload-area" style="max-width: 400px; margin: auto; padding: 1rem;"></div>
 
     <div class="fallback">
@@ -203,11 +195,18 @@
   const uppy = new Uppy.Core({
     restrictions: {
       maxNumberOfFiles: 5,
-      allowedFileTypes: ['image/*'],
+      allowedFileTypes: ['image/jpeg', 'image/png'],
     },
     autoProceed: true,
     allowMultipleUploadBatches: false,
-  }).use(Uppy.XHRUpload, {
+  })
+  .use(Uppy.Dashboard, {
+    inline: true,
+    target: '#upload-area',
+    showProgressDetails: true,
+    note: 'Max 5 files • JPEG/PNG only',
+  })
+  .use(Uppy.XHRUpload, {
     getUploadParameters(file) {
       return fetch(`https://ancient-fire-e0e0.andrewandaoifegethitched.workers.dev?filename=${encodeURIComponent(file.name)}`)
         .then(res => res.json())
@@ -220,6 +219,10 @@
           },
         }));
     },
+  });
+
+  uppy.on('complete', () => {
+    alert('🖤 Your memory has been uploaded. Thank you!');
   });
 </script>
 
