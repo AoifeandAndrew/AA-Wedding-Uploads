@@ -1,3 +1,6 @@
 name = "uploader"
 main = "src/index.js"
 compatibility_date = "2025-07-26"
+# wrangler.toml (wrangler v3.88.0^)
+[observability.logs]
+enabled = false
