@@ -13,7 +13,7 @@ export default {
     const accessKeyId = env.R2_ACCESS_KEY_ID;
     const secretAccessKey = env.R2_SECRET_ACCESS_KEY;
     const bucket = env.R2_BUCKET_NAME;
-    const endpoint = env.R2_ENDPOINT;
+    const endpoint = 'https://9e9500d1925c42f12f71e04cda1a1c98.r2.cloudflarestorage.com';
 
     const region = 'auto';
     const service = 's3';
