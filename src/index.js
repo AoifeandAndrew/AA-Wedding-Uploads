@@ -10,8 +10,8 @@ export default {
     }
 
     // Read environment variables
-    const accessKeyId = env.R2_ACCESS_KEY_ID;
-    const secretAccessKey = env.R2_SECRET_ACCESS_KEY;
+    const accessKeyId = 'd70f16fb96e8b93d2530fffa162ac07c';
+    const secretAccessKey = '52eb8165acc2b3a3bfcd13e295eed361b3877af537a0a2236fc1379065b2d5a9';
     const bucket = 'wedding-uploads';
     const endpoint = 'https://9e9500d1925c42f12f71e04cda1a1c98.r2.cloudflarestorage.com';
 
