@@ -1,4 +1,4 @@
-name = "uploader"
+name = "uploader-fix"
 main = "src/index.js"
 compatibility_date = "2025-07-26"
 # wrangler.toml (wrangler v3.88.0^)
