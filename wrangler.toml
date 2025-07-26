@@ -1,11 +1,10 @@
 name = "uploader-fix"
 main = "src/index.js"
+account_id = "9e9500d1925c42f12f71e04cda1a1c98"
 compatibility_date = "2025-07-26"
 # wrangler.toml (wrangler v3.88.0^)
 [observability.logs]
 enabled = true
-
-account_id = "9e9500d1925c42f12f71e04cda1a1c98"
 
 [[r2_buckets]]
 binding = "MY_BUCKET"
