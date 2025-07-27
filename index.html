@@ -474,6 +474,8 @@
       const file = selectedFiles[i];
       const progress = ((i + 1) / selectedFiles.length) * 100;
       progressFill.style.width = progress + '%';
+
+console.log("Uploading to presigned URL:", url);
       
       try {
         // Get presigned URL
