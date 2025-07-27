@@ -6,3 +6,7 @@ compatibility_date = "2024-06-01"
 binding = "R2_BUCKET"
 bucket_name = "wedding-uploads"
 preview_bucket_name = "wedding-uploads"
+
+# wrangler.toml (wrangler v3.88.0^)
+[observability.logs]
+enabled = true
