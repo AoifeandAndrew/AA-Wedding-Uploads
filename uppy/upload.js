@@ -5,15 +5,15 @@ import Uppy from 'https://esm.sh/@uppy/core';
 import XHRUpload from 'https://esm.sh/@uppy/xhr-upload';
 
 const uppy = new Uppy({
-  restrictions: { maxNumberOfFiles: 1 },
+  restrictions: { maxNumberOfFiles: 30 },
   autoProceed: true
 }).use(XHRUpload, {
-  endpoint: 'https://uploader-fix.andrewandaoifegethitched.workers.dev', // Will fetch presigned URL from here
+  endpoint: 'https://uploader-fix.andrewandaoifegethitched.workers.dev/', // Will fetch presigned URL from here
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   getResponseData: (res) => res,
   getUploadParameters: async (file) => {
-    const response = await fetch('https://your-worker-url.dev/', {
+    const response = await fetch('https://uploader-fix.andrewandaoifegethitched.workers.dev/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ filename: file.name })
