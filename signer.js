@@ -1,32 +1,47 @@
 // signer.js
-
 const encoder = new TextEncoder();
 
-export function getSignedUrl({ accessKey, secretKey, bucket, region, endpoint, key, expiresInSeconds }) {
-  const service = "s3";
+async function sha256(message) {
+  const data = encoder.encode(message);
+  return crypto.subtle.digest("SHA-256", data);
+}
+
+async function hmac(key, message) {
+  const cryptoKey = await crypto.subtle.importKey(
+    "raw",
+    typeof key === "string" ? encoder.encode(key) : key,
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+  return crypto.subtle.sign("HMAC", cryptoKey, encoder.encode(message));
+}
+
+function toHex(buffer) {
+  return [...new Uint8Array(buffer)].map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+export async function generateSignedUrl(env, key) {
   const method = "PUT";
-  const host = new URL(endpoint).host;
+  const host = new URL(env.R2_ENDPOINT).host;
   const now = new Date();
   const amzDate = now.toISOString().replace(/[:-]|\.\d{3}/g, "");
-  const shortDate = amzDate.slice(0, 8);
-  const credentialScope = `${shortDate}/${region}/${service}/aws4_request`;
+  const dateStamp = amzDate.slice(0, 8);
+  const credentialScope = `${dateStamp}/${env.R2_REGION}/s3/aws4_request`;
   const algorithm = "AWS4-HMAC-SHA256";
-  const expires = expiresInSeconds.toString();
   const signedHeaders = "host";
 
-  // Create canonical request
-  const canonicalUri = `/${bucket}/${key}`;
+  const canonicalUri = `/${env.R2_BUCKET_NAME}/${key}`;
   const canonicalQuery = [
     `X-Amz-Algorithm=${algorithm}`,
-    `X-Amz-Credential=${encodeURIComponent(`${accessKey}/${credentialScope}`)}`,
+    `X-Amz-Credential=${encodeURIComponent(`${env.R2_ACCESS_KEY_ID}/${credentialScope}`)}`,
     `X-Amz-Date=${amzDate}`,
-    `X-Amz-Expires=${expires}`,
+    `X-Amz-Expires=900`,
     `X-Amz-SignedHeaders=${signedHeaders}`
   ].join("&");
 
   const canonicalHeaders = `host:${host}\n`;
   const payloadHash = "UNSIGNED-PAYLOAD";
-
   const canonicalRequest = [
     method,
     canonicalUri,
@@ -36,42 +51,19 @@ export function getSignedUrl({ accessKey, secretKey, bucket, region, endpoint, k
     payloadHash
   ].join("\n");
 
+  const hashedRequest = await sha256(canonicalRequest);
   const stringToSign = [
     algorithm,
     amzDate,
     credentialScope,
-    toHex(sha256(canonicalRequest))
+    toHex(hashedRequest)
   ].join("\n");
 
-  // Generate signing key
-  const kDate = hmac(`AWS4${secretKey}`, shortDate);
-  const kRegion = hmac(kDate, region);
-  const kService = hmac(kRegion, service);
-  const kSigning = hmac(kService, "aws4_request");
+  const kDate = await hmac(`AWS4${env.R2_SECRET_ACCESS_KEY}`, dateStamp);
+  const kRegion = await hmac(kDate, env.R2_REGION);
+  const kService = await hmac(kRegion, "s3");
+  const kSigning = await hmac(kService, "aws4_request");
+  const signature = toHex(await hmac(kSigning, stringToSign));
 
-  const signature = toHex(hmac(kSigning, stringToSign));
-
-  const signedUrl = `${endpoint}/${bucket}/${key}?${canonicalQuery}&X-Amz-Signature=${signature}`;
-  return signedUrl;
-}
-
-// WebCrypto helpers
-function sha256(str) {
-  return crypto.subtle.digest("SHA-256", encoder.encode(str));
-}
-
-async function hmac(key, data) {
-  const cryptoKey = await crypto.subtle.importKey(
-    "raw",
-    typeof key === "string" ? encoder.encode(key) : key,
-    { name: "HMAC", hash: "SHA-256" },
-    false,
-    ["sign"]
-  );
-  return crypto.subtle.sign("HMAC", cryptoKey, encoder.encode(data));
-}
-
-function toHex(buffer) {
-  const bytes = new Uint8Array(buffer);
-  return [...bytes].map(b => b.toString(16).padStart(2, "0")).join("");
+  return `${env.R2_ENDPOINT}/${env.R2_BUCKET_NAME}/${key}?${canonicalQuery}&X-Amz-Signature=${signature}`;
 }
