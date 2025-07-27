@@ -1,7 +1,10 @@
-[
-  {
-    "AllowedOrigins": ["https://aoifeandandrew.github.io"],
-    "AllowedMethods": ["PUT", "OPTIONS"],
-    "AllowedHeaders": ["*"]
-  }
-]
+{
+  "rules": [
+    {
+      "AllowedOrigins": ["https://aoifeandandrew.github.io"],
+      "AllowedMethods": ["PUT", "OPTIONS"],
+      "AllowedHeaders": ["*"],
+      "MaxAgeSeconds": 300
+    }
+  ]
+}
