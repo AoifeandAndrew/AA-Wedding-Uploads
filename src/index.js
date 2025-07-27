@@ -1,58 +1,114 @@
 export default {
   async fetch(request, env) {
-    if (request.method !== 'POST') {
-      return new Response('Method Not Allowed', { status: 405 });
+    // Handle CORS preflight requests
+    if (request.method === 'OPTIONS') {
+      return new Response(null, {
+        status: 200,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        },
+      });
     }
 
-    const { filename } = await request.json();
+    // Only allow GET requests for presigned URLs
+    if (request.method !== 'GET') {
+      return new Response('Method Not Allowed', { 
+        status: 405,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        }
+      });
+    }
+
+    // Get filename from URL parameters
+    const url = new URL(request.url);
+    const filename = url.searchParams.get('filename');
+    
     if (!filename) {
-      return new Response('Missing filename', { status: 400 });
+      return new Response('Missing filename parameter', { 
+        status: 400,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        }
+      });
     }
 
-    // Read environment variables
-    const accessKeyId = 'd70f16fb96e8b93d2530fffa162ac07c';
-    const secretAccessKey = '52eb8165acc2b3a3bfcd13e295eed361b3877af537a0a2236fc1379065b2d5a9';
-    const bucket = 'wedding-uploads';
-    const endpoint = 'https://9e9500d1925c42f12f71e04cda1a1c98.r2.cloudflarestorage.com';
+    try {
+      // Read environment variables
+      const accessKeyId = env.R2_ACCESS_KEY_ID || 'd70f16fb96e8b93d2530fffa162ac07c';
+      const secretAccessKey = env.R2_SECRET_ACCESS_KEY || '52eb8165acc2b3a3bfcd13e295eed361b3877af537a0a2236fc1379065b2d5a9';
+      const bucket = 'wedding-uploads';
+      const endpoint = 'https://9e9500d1925c42f12f71e04cda1a1c98.r2.cloudflarestorage.com';
 
-    const region = 'auto';
-    const service = 's3';
-    const now = new Date();
-    const amzDate = now.toISOString().replace(/[:-]|\.\d{3}/g, '');
-    const shortDate = amzDate.substring(0, 8);
+      const region = 'auto';
+      const service = 's3';
+      const now = new Date();
+      const amzDate = now.toISOString().replace(/[:-]|\.\d{3}/g, '');
+      const shortDate = amzDate.substring(0, 8);
 
-    const credentialScope = `${shortDate}/${region}/${service}/aws4_request`;
-    const credential = `${accessKeyId}/${credentialScope}`;
+      // Add timestamp to filename to avoid conflicts
+      const timestamp = Date.now();
+      const fileExtension = filename.split('.').pop();
+      const baseName = filename.replace(/\.[^/.]+$/, '');
+      const uniqueFilename = `${baseName}_${timestamp}.${fileExtension}`;
 
-    const host = new URL(endpoint).host;
-    const urlPath = `/${filename}`;
+      const credentialScope = `${shortDate}/${region}/${service}/aws4_request`;
+      const credential = `${accessKeyId}/${credentialScope}`;
 
-    const signedHeaders = 'host';
-    const canonicalRequest = [
-      'PUT',
-      urlPath,
-      '',
-      `host:${host}`,
-      '',
-      signedHeaders,
-      'UNSIGNED-PAYLOAD'
-    ].join('\n');
+      const host = new URL(endpoint).host;
+      const urlPath = `/${uniqueFilename}`;
 
-    const stringToSign = [
-      'AWS4-HMAC-SHA256',
-      amzDate,
-      credentialScope,
-      await hashSHA256(canonicalRequest)
-    ].join('\n');
+      const signedHeaders = 'host';
+      const canonicalRequest = [
+        'PUT',
+        urlPath,
+        '',
+        `host:${host}`,
+        '',
+        signedHeaders,
+        'UNSIGNED-PAYLOAD'
+      ].join('\n');
 
-    const signingKey = await getSigningKey(secretAccessKey, shortDate, region, service);
-    const signature = await hmacSHA256Hex(signingKey, stringToSign);
+      const stringToSign = [
+        'AWS4-HMAC-SHA256',
+        amzDate,
+        credentialScope,
+        await hashSHA256(canonicalRequest)
+      ].join('\n');
 
-    const presignedURL = `${endpoint}/${filename}?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=${encodeURIComponent(credential)}&X-Amz-Date=${amzDate}&X-Amz-SignedHeaders=${signedHeaders}&X-Amz-Signature=${signature}`;
+      const signingKey = await getSigningKey(secretAccessKey, shortDate, region, service);
+      const signature = await hmacSHA256Hex(signingKey, stringToSign);
 
-    return new Response(JSON.stringify({ url: presignedURL }), {
-      headers: { 'content-type': 'application/json' },
-    });
+      // Set expiration to 1 hour from now
+      const expires = Math.floor(Date.now() / 1000) + 3600;
+
+      const presignedURL = `${endpoint}${urlPath}?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=${encodeURIComponent(credential)}&X-Amz-Date=${amzDate}&X-Amz-Expires=3600&X-Amz-SignedHeaders=${signedHeaders}&X-Amz-Signature=${signature}`;
+
+      return new Response(JSON.stringify({ 
+        url: presignedURL,
+        filename: uniqueFilename 
+      }), {
+        headers: { 
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      });
+
+    } catch (error) {
+      console.error('Error generating presigned URL:', error);
+      return new Response(JSON.stringify({ 
+        error: 'Failed to generate upload URL',
+        details: error.message 
+      }), {
+        status: 500,
+        headers: { 
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      });
+    }
   }
 }
 
@@ -67,7 +123,7 @@ async function hashSHA256(message) {
 // Helper: HMAC-SHA256
 async function hmacSHA256Hex(key, message) {
   const encoder = new TextEncoder();
-  const keyData = encoder.encode(key);
+  const keyData = typeof key === 'string' ? encoder.encode(key) : key;
   const cryptoKey = await crypto.subtle.importKey(
     'raw',
     keyData,
