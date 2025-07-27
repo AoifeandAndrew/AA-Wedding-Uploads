@@ -303,7 +303,7 @@
       <div class="upload-text">Drop your photos here</div>
       <div class="upload-subtext">or click to browse your device</div>
       <div class="upload-subtext">Up to 30 photos or videos • JPEG, PNG, HEIC, MP4 • Max 1GB each</div>
-      <input type="file" class="file-input" id="fileInput" multiple accept="image/jpeg,image/jpg,image/png,image/heic,image/heif">
+      <input type="file" class="file-input" id="fileInput" multiple accept="image/jpeg,image/jpg,image/png,image/heic,image/heif,video/mp4,video/quicktime,video/x-m4v,video/webm">
     </div>
     
     <div class="selected-files" id="selectedFiles"></div>
@@ -480,10 +480,10 @@
       try {
         // Get presigned URL
         const response = await fetch("https://uploader-fix.andrewandaoifegethitched.workers.dev", {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ filename: file.name })
-      });
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ filename: file.name })
+});
         
         const { url } = await response.json();
         
