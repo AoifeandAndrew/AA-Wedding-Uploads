@@ -1,0 +1,8 @@
+name = "wedding-uploader-worker"
+main = "worker.js"
+compatibility_date = "2024-06-01"
+
+[[r2_buckets]]
+binding = "R2_BUCKET"
+bucket_name = "wedding-uploads"
+preview_bucket_name = "wedding-uploads"
