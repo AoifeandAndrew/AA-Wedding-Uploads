@@ -474,8 +474,6 @@
       const file = selectedFiles[i];
       const progress = ((i + 1) / selectedFiles.length) * 100;
       progressFill.style.width = progress + '%';
-
-console.log("Uploading to presigned URL:", url);
       
       try {
         // Get presigned URL
@@ -486,6 +484,11 @@ console.log("Uploading to presigned URL:", url);
 });
         
         const { url } = await response.json();
+        console.log("Uploading to presigned URL:", url);
+
+if (!url) {
+  throw new Error("No presigned URL returned");
+}
         
         // Upload file
         const uploadResponse = await fetch(url, {
@@ -498,10 +501,12 @@ console.log("Uploading to presigned URL:", url);
         } else {
           failedCount++;
         }
-      } catch (error) {
-        console.error('Upload error:', error);
-        failedCount++;
-      }
+      catch (error) {
+  console.error(`Upload error for ${file.name}:`, error);
+  showStatus(`⚠️ ${file.name} failed to upload.`, 'error');
+  failedCount++;
+}
+
     }
     
     // Show results
