@@ -501,7 +501,7 @@ if (!url) {
         } else {
           failedCount++;
         }
-      catch (error) {
+      } catch (error) {
   console.error(`Upload error for ${file.name}:`, error);
   showStatus(`⚠️ ${file.name} failed to upload.`, 'error');
   failedCount++;
