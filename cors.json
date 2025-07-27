@@ -1,0 +1,7 @@
+[
+  {
+    "AllowedOrigins": ["https://aoifeandandrew.github.io"],
+    "AllowedMethods": ["PUT", "OPTIONS"],
+    "AllowedHeaders": ["*"]
+  }
+]
