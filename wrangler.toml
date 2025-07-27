@@ -11,3 +11,10 @@ preview_bucket_name = "wedding-uploads"
 # wrangler.toml (wrangler v3.88.0^)
 [observability.logs]
 enabled = true
+
+[vars]
+R2_ACCESS_KEY_ID = "d70f16fb96e8b93d2530fffa162ac07c"
+R2_SECRET_ACCESS_KEY = "1f6aa4628fa0f955363f287cdff6db6393ad70d1970a8f4cac89b93e962458a6"
+R2_BUCKET_NAME = "wedding-uploads"
+R2_ENDPOINT = "https://9e9500d1925c42f12f71e04cda1a1c98.r2.cloudflarestorage.com"
+R2_REGION = "auto"
