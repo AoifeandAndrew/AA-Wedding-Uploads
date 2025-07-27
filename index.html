@@ -7,6 +7,9 @@
   
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Uppy CSS -->
+  <link href="https://releases.transloadit.com/uppy/v4.18.0/uppy.min.css" rel="stylesheet">
 
   <style>
     body {
@@ -58,25 +61,31 @@
       max-width: 600px;
       margin: 0 auto 30px auto;
       box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    #upload-area {
+      max-width: 600px;
+      margin: 20px auto;
+    }
+
+    .uppy-Dashboard {
+      border-radius: 12px !important;
+      border: 2px solid #ffcccc !important;
+    }
+    
+    .uppy-Dashboard-inner {
+      background-color: #fff !important;
+    }
+    
+    .uppy-Dashboard-AddFiles-title {
+      color: #d45d79 !important;
+      font-family: 'Quicksand', sans-serif !important;
+    }
+    
+    .upload-instructions {
       font-size: 1.2em;
-    }
-
-    .upload-button {
-      padding: 14px 30px;
-      font-size: 1.1em;
-      background-color: #ff89a7;
-      color: white;
-      font-weight: bold;
-      border: none;
-      border-radius: 30px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.15);
-      cursor: pointer;
-      transition: background-color 0.3s, transform 0.2s;
-    }
-
-    .upload-button:hover {
-      background-color: #e06385;
-      transform: scale(1.05);
+      margin-bottom: 20px;
+      color: #4a4a4a;
     }
 
     .fallback {
@@ -144,9 +153,12 @@
 
   <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
 
-  upload here motherfuckers
-  
-<div id="upload-area" style="max-width: 400px; margin: auto; padding: 1rem;"></div>
+  <div class="upload-section">
+    <div class="upload-instructions">
+      Share your favorite moments from our special day! 📸
+    </div>
+    <div id="upload-area"></div>
+  </div>
 
     <div class="fallback">
       If you’re having trouble uploading or prefer to email them instead,<br>
@@ -184,25 +196,36 @@
     setInterval(createSparkle, 600);
   </script>
   
-<script>
-  const uppy = new Uppy.Core({
+<!-- Uppy JavaScript -->
+<script type="module">
+  import { Uppy, Dashboard, XHRUpload } from 'https://releases.transloadit.com/uppy/v4.18.0/uppy.min.mjs';
+
+  const uppy = new Uppy({
     restrictions: {
       maxNumberOfFiles: 5,
-      allowedFileTypes: ['image/jpeg', 'image/png'],
+      allowedFileTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/heic', 'image/heif'],
+      maxFileSize: 10 * 1024 * 1024, // 10MB
     },
-    autoProceed: true,
-    allowMultipleUploadBatches: false,
+    autoProceed: false,
   })
-  .use(Uppy.Dashboard, {
+  .use(Dashboard, {
     inline: true,
     target: '#upload-area',
     showProgressDetails: true,
-    note: 'Max 5 files • JPEG/PNG only',
+    note: 'Upload up to 5 photos (max 10MB each) • JPEG, PNG, HEIC supported',
+    proudlyDisplayPoweredByUppy: false,
+    theme: 'light',
+    height: 350,
   })
-  .use(Uppy.XHRUpload, {
+  .use(XHRUpload, {
     getUploadParameters(file) {
       return fetch(`https://ancient-fire-e0e0.andrewandaoifegethitched.workers.dev?filename=${encodeURIComponent(file.name)}`)
-        .then(res => res.json())
+        .then(res => {
+          if (!res.ok) {
+            throw new Error('Failed to get upload URL');
+          }
+          return res.json();
+        })
         .then(data => ({
           method: 'PUT',
           endpoint: data.url,
@@ -210,13 +233,31 @@
             'x-amz-acl': 'public-read',
             'x-amz-content-sha256': 'UNSIGNED-PAYLOAD',
           },
-        }));
+        }))
+        .catch(error => {
+          console.error('Upload error:', error);
+          throw error;
+        });
     },
   });
-
-  uppy.on('complete', () => {
-    alert('🖤 Your memory has been uploaded. Thank you!');
+  uppy.on('upload-success', (file, response) => {
+    console.log('File uploaded successfully:', file.name);
   });
+
+  uppy.on('complete', (result) => {
+    if (result.successful.length > 0) {
+      alert(`🖤 ${result.successful.length} photo${result.successful.length > 1 ? 's' : ''} uploaded successfully! Thank you for sharing your memories!`);
+    }
+    if (result.failed.length > 0) {
+      alert(`⚠️ ${result.failed.length} photo${result.failed.length > 1 ? 's' : ''} failed to upload. Please try again.`);
+    }
+  });
+  
+  uppy.on('error', (error) => {
+    console.error('Uppy error:', error);
+    alert('Something went wrong with the upload. Please try again or use the email option below.');
+  });
+</script>
 </script>
 
 </body>
