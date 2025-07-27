@@ -2,8 +2,7 @@
 const encoder = new TextEncoder();
 
 async function sha256(message) {
-  const data = encoder.encode(message);
-  return crypto.subtle.digest("SHA-256", data);
+  return crypto.subtle.digest("SHA-256", encoder.encode(message));
 }
 
 async function hmac(key, message) {
