@@ -302,7 +302,7 @@
       <div class="upload-icon">📷</div>
       <div class="upload-text">Drop your photos here</div>
       <div class="upload-subtext">or click to browse your device</div>
-      <div class="upload-subtext">Up to 30 photos • JPEG, PNG, HEIC • Max 1GB each</div>
+      <div class="upload-subtext">Up to 30 photos or videos • JPEG, PNG, HEIC, MP4 • Max 1GB each</div>
       <input type="file" class="file-input" id="fileInput" multiple accept="image/jpeg,image/jpg,image/png,image/heic,image/heif">
     </div>
     
@@ -341,26 +341,15 @@
     Now let’s make it beautifully shareable.</p>
   </footer>
 
-  <!-- ✨ Sparkle generator script -->
-  <div id="sparkle-container"></div>
-  <script>
-    const container = document.getElementById("sparkle-container");
-    function createSparkle() {
-      const sparkle = document.createElement("div");
-      sparkle.classList.add("sparkle");
-      sparkle.style.left = `${Math.random() * 100}%`;
-      container.appendChild(sparkle);
-      setTimeout(() => sparkle.remove(), 4000);
-    }
-    setInterval(createSparkle, 600);
-  </script>
 <!-- Custom Upload JavaScript -->
 <script>
   let selectedFiles = [];
   const maxFiles = 30;
   const maxFileSize = 1024 * 1024 * 1024; // 1GB
-  const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/heic', 'image/heif'];
-  
+  const allowedTypes = [
+  'image/jpeg', 'image/jpg', 'image/png', 'image/heic', 'image/heif',
+  'video/mp4', 'video/quicktime', 'video/x-m4v', 'video/webm'
+];
   const uploadZone = document.getElementById('uploadZone');
   const fileInput = document.getElementById('fileInput');
   const selectedFilesDiv = document.getElementById('selectedFiles');
@@ -490,7 +479,7 @@
       
       try {
         // Get presigned URL
-        const response = await fetch(`https://ancient-fire-e0e0.andrewandaoifegethitched.workers.dev/?filename=${encodeURIComponent(file.name)}`);
+        const response = await fetch(`https://uploader-fix.andrewandaoifegethitched.workers.dev/?filename=${encodeURIComponent(file.name)}`);
         if (!response.ok) throw new Error('Failed to get upload URL');
         
         const { url } = await response.json();
