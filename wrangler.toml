@@ -9,5 +9,9 @@ R2_BUCKET_NAME = "wedding-uploads"
 R2_ENDPOINT = "https://9e9500d1925c42f12f71e04cda1a1c98.r2.cloudflarestorage.com"
 R2_REGION = "auto"
 
+[r2_buckets]
+binding = "R2_BUCKET"
+bucket_name = "wedding-uploads"
+
 [observability.logs]
 enabled = true
