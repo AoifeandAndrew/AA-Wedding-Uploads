@@ -1,59 +1,13 @@
-import { getSignedUrl } from './signer';
+name = "wedding-uploader-worker"
+main = "worker.js"
+compatibility_date = "2024-07-27"
 
-export default {
-  async fetch(request, env) {
-    if (request.method === 'OPTIONS') {
-      return new Response(null, {
-        status: 204,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'POST, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type'
-        }
-      });
-    }
+[[r2_buckets]]
+binding = "R2_BUCKET"
+bucket_name = "wedding-uploads"
+preview_bucket_name = "wedding-uploads"
 
-    if (request.method !== 'POST') {
-      return new Response(JSON.stringify({ error: 'Method Not Allowed' }), {
-        status: 405,
-        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
-      });
-    }
 
-    let data;
-    try {
-      data = await request.json();
-    } catch {
-      return new Response(JSON.stringify({ error: 'Invalid JSON' }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
-      });
-    }
-
-    const { filename } = data;
-    if (!filename || typeof filename !== 'string') {
-      return new Response(JSON.stringify({ error: 'Missing or invalid filename' }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
-      });
-    }
-
-    const uniqueName = `${Date.now()}-${Math.random().toString(36).slice(2)}-${filename}`;
-    const url = getSignedUrl({
-      accessKey: env.R2_ACCESS_KEY_ID,
-      secretKey: env.R2_SECRET_ACCESS_KEY,
-      bucket: env.R2_BUCKET_NAME,
-      region: env.R2_REGION,
-      endpoint: env.R2_ENDPOINT,
-      key: uniqueName,
-      expiresInSeconds: 900 // 15 minutes
-    });
-
-    return new Response(JSON.stringify({ url }), {
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      }
-    });
-  }
-};
+# wrangler.toml (wrangler v3.88.0^)
+[observability.logs]
+enabled = true
