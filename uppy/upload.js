@@ -8,7 +8,7 @@ const uppy = new Uppy({
   restrictions: { maxNumberOfFiles: 1 },
   autoProceed: true
 }).use(XHRUpload, {
-  endpoint: 'https://your-worker-url.dev/', // Will fetch presigned URL from here
+  endpoint: 'https://uploader-fix.andrewandaoifegethitched.workers.dev', // Will fetch presigned URL from here
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   getResponseData: (res) => res,
