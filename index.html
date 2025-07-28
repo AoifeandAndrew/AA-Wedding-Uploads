@@ -74,11 +74,10 @@
 
           // Upload file to R2 using presigned URL
           const proxied = `https://worker.andrewandaoifegethitched.workers.dev?url=${encodeURIComponent(url)}`
-          const uploadResponse = await fetch(url, {
-            method: 'PUT',
-            body: file
-          });
-
+          const uploadResponse = await fetch(
+  `https://worker.andrewandaoifegethitched.workers.dev?url=${encodeURIComponent(url)}`, 
+  { method: 'PUT', body: file }
+);
           if (uploadResponse.ok) {
             console.log(`Successfully uploaded ${file.name}`);
           } else {
