@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aoife and Andrew's Wedding</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;700&family=Lato:wght@300;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Quicksand', sans-serif;
+      font-family: 'Lato', 'Montserrat', Arial, sans-serif;
       text-align: center;
-      background: #f9f5f2;
+      background: #f7f7f7;
       padding: 40px;
-      color: #000000;
+      color: #181818;
       position: relative;
       overflow-x: hidden;
       margin: 0;
@@ -23,15 +23,19 @@
       100% { opacity: 1; }
     }
     h1 {
-      font-family: 'Great Vibes', cursive;
-      font-size: 3em;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 300;
+      font-size: 3.2em;
+      letter-spacing: 0.04em;
       margin-bottom: 10px;
-      color: #000000;
+      color: #181818;
+      text-transform: uppercase;
+      line-height: 1.1;
     }
     .quote {
       font-size: 1.2em;
       font-style: italic;
-      color: #000000;
+      color: #444;
       margin-bottom: 25px;
     }
     img {
@@ -39,61 +43,61 @@
       margin: 0 auto 20px auto;
       max-width: 90%;
       height: auto;
-      border: 5px solid #ffcccc;
+      border: 3px solid #e0e0e0;
       border-radius: 16px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.08);
     }
     .upload-section {
-      background-color: #fff6f8;
+      background-color: #fff;
       padding: 30px;
       border-radius: 16px;
       max-width: 600px;
       margin: 0 auto 30px auto;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.07);
     }
     .upload-instructions {
       font-size: 1.2em;
       margin-bottom: 25px;
-      color: #000000;
+      color: #222;
     }
     .upload-zone {
-      border: 3px dashed #ffb3c1;
-      border-radius: 20px;
-      padding: 40px 20px;
-      background: linear-gradient(135deg, #fff9fb, #ffeef2);
+      border: 2.5px dashed #bdbdbd;
+      border-radius: 18px;
+      padding: 38px 18px;
+      background: linear-gradient(135deg, #fafafa, #f3f3f3);
       transition: all 0.3s ease;
       cursor: pointer;
       position: relative;
       overflow: hidden;
     }
     .upload-zone:hover {
-      border-color: #ff89a7;
-      background: linear-gradient(135deg, #fff6f8, #ffe8ed);
+      border-color: #181818;
+      background: linear-gradient(135deg, #f7f7f7, #ededed);
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(255, 179, 193, 0.3);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.07);
     }
     .upload-zone.dragover {
-      border-color: #d45d79;
-      background: linear-gradient(135deg, #fff0f3, #ffe0e6);
+      border-color: #222;
+      background: linear-gradient(135deg, #ededed, #f7f7f7);
       transform: scale(1.02);
     }
     .upload-icon {
-      font-size: 3em;
-      color: #000000;
+      font-size: 2.7em;
+      color: #222;
       margin-bottom: 15px;
       transition: transform 0.3s ease;
     }
     .upload-zone:hover .upload-icon {
-      transform: scale(1.1) rotate(5deg);
+      transform: scale(1.1) rotate(3deg);
     }
     .upload-text {
-      font-size: 1.3em;
-      color:#000000;
+      font-size: 1.2em;
+      color:#181818;
       font-weight: 700;
       margin-bottom: 8px;
     }
     .upload-subtext {
-      color: #000000;
+      color: #444;
       font-size: 1em;
       margin-bottom: 15px;
     }
@@ -105,8 +109,8 @@
       text-align: left;
     }
     .file-item {
-      background: white;
-      border: 1px solid #ffcccc;
+      background: #fafafa;
+      border: 1px solid #e0e0e0;
       border-radius: 10px;
       padding: 12px 15px;
       margin: 8px 0;
@@ -116,7 +120,7 @@
       transition: all 0.3s ease;
     }
     .file-item:hover {
-      box-shadow: 0 4px 12px rgba(255, 179, 193, 0.2);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
     .file-info {
       display: flex;
@@ -124,23 +128,23 @@
       flex: 1;
     }
     .file-icon {
-      color: #ff89a7;
+      color: #888;
       margin-right: 10px;
       font-size: 1.2em;
     }
     .file-name {
-      color: #4a4a4a;
+      color: #222;
       font-weight: 600;
       margin-right: 10px;
     }
     .file-size {
-      color: #7a7a7a;
+      color: #888;
       font-size: 0.9em;
     }
     .remove-file {
       background: none;
       border: none;
-      color: #ff6b6b;
+      color: #888;
       cursor: pointer;
       font-size: 1.2em;
       padding: 5px;
@@ -148,12 +152,13 @@
       transition: all 0.3s ease;
     }
     .remove-file:hover {
-      background-color: #ffe0e0;
+      background-color: #e0e0e0;
+      color: #181818;
       transform: scale(1.1);
     }
     .upload-button {
-      background: linear-gradient(135deg, #ff89a7, #d45d79);
-      color: white;
+      background: #181818;
+      color: #fff;
       border: none;
       padding: 15px 40px;
       border-radius: 25px;
@@ -162,15 +167,17 @@
       cursor: pointer;
       transition: all 0.3s ease;
       margin-top: 20px;
-      box-shadow: 0 4px 15px rgba(212, 93, 121, 0.3);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
       display: none;
     }
     .upload-button.show {
       display: block;
     }
     .upload-button:hover {
+      background: #444;
+      color: #fff;
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(212, 93, 121, 0.4);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
     }
     .upload-button:disabled {
       opacity: 0.6;
@@ -180,7 +187,7 @@
     .progress-bar {
       width: 100%;
       height: 8px;
-      background-color: #ffe0e6;
+      background-color: #e0e0e0;
       border-radius: 4px;
       overflow: hidden;
       margin-top: 10px;
@@ -188,7 +195,7 @@
     }
     .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, #ff89a7, #d45d79);
+      background: linear-gradient(90deg, #222, #888);
       width: 0%;
       transition: width 0.3s ease;
     }
@@ -201,34 +208,35 @@
       display: none;
     }
     .upload-status.success {
-      background-color: #e8f5e8;
-      color: #2d5a2d;
-      border: 1px solid #b3d9b3;
+      background-color: #f2f7f2;
+      color: #222;
+      border: 1px solid #bdbdbd;
     }
     .upload-status.error {
-      background-color: #ffe8e8;
-      color: #d32f2f;
-      border: 1px solid #ffb3b3;
+      background-color: #f7eaea;
+      color: #b71c1c;
+      border: 1px solid #e0e0e0;
     }
     .fallback {
       font-size: 1em;
       margin-top: 20px;
-      background-color: #ffeef2;
+      background-color: #f7f7f7;
       padding: 15px;
       border-radius: 12px;
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
       word-break: break-word;
+      color: #444;
     }
     .fallback a {
-      color: #d45d79;
+      color: #181818;
       text-decoration: underline;
       font-weight: bold;
     }
     .reminder {
-      background-color: #fdf6f0;
+      background-color: #f7f7f7;
       padding: 20px;
       margin-top: 30px;
       border-radius: 12px;
@@ -236,13 +244,14 @@
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
       word-break: break-word;
+      color: #444;
     }
     footer p {
       font-size: 1.2em;
       font-style: italic;
-      color: #a86c6c;
+      color: #888;
       margin-top: 40px;
     }
     .sparkle {
@@ -250,14 +259,14 @@
       bottom: 0;
       width: 8px;
       height: 8px;
-      background-color: #ffcad4;
+      background-color: #e0e0e0;
       border-radius: 50%;
-      opacity: 0.6;
+      opacity: 0.5;
       animation: sparkleUp 3.5s ease-in forwards;
       z-index: 1;
     }
     @keyframes sparkleUp {
-      0% { transform: translateY(0) scale(1); opacity: 0.6; }
+      0% { transform: translateY(0) scale(1); opacity: 0.5; }
       60% { opacity: 1; }
       100% { transform: translateY(-260px) scale(1.2); opacity: 0; }
     }
@@ -399,11 +408,19 @@
       selectedFiles.forEach((file, index) => {
         const fileItem = document.createElement('div');
         fileItem.className = 'file-item';
+        // Thumbnail preview for images
+        let thumbHtml = '';
+        if (file.type.startsWith('image/')) {
+          const url = URL.createObjectURL(file);
+          thumbHtml = `<img src="${url}" alt="preview" class="file-thumb" onload="URL.revokeObjectURL(this.src)" />`;
+        }
         fileItem.innerHTML = `
           <div class="file-info">
-            <span class="file-icon">📸</span>
-            <span class="file-name">${file.name}</span>
-            <span class="file-size">(${formatFileSize(file.size)})</span>
+            ${thumbHtml}
+            <div style="display: flex; flex-direction: column; margin-left: 12px;">
+              <span class="file-name">${file.name}</span>
+              <span class="file-size">${formatFileSize(file.size)}</span>
+            </div>
           </div>
           <button class="remove-file" onclick="removeFile(${index})">×</button>
         `;
