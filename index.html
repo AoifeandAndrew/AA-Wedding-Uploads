@@ -11,7 +11,6 @@
   <script src="https://apis.google.com/js/api.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
-    /* Your elegant wedding styles, untouched and perfect */
     body {
       font-family: 'Merriweather', serif;
       background: #f4f1ea;
@@ -119,11 +118,17 @@
   <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
 
   <div class="upload-section">
+    <p style="font-size: 1.1em; color: #222; margin-bottom: 25px;">
+      When you tap below, Google may briefly ask for permission to help you share your photos with us. 
+      It’s fast, safe, and totally private—just like your memories.
+    </p>
+
     <div class="upload-zone" role="button" tabindex="0" onclick="onApiLoad()">
       <div class="upload-icon">📷</div>
       <div class="upload-text">Tap here to upload your wedding memories ✨</div>
       <div class="upload-subtext">Up to 30 photos or videos</div>
     </div>
+
     <button class="upload-button" onclick="onApiLoad()">Upload Photos ✨</button>
     <div class="upload-status" id="uploadStatus"></div>
   </div>
@@ -186,11 +191,13 @@
 
   function pickerCallback(data) {
     if (data.action === google.picker.Action.PICKED) {
-      statusDiv.textContent = 'Upload successful! Thank you for sharing your memories! ✨';
+      statusDiv.textContent = 'Upload successful! Want to share more memories? ✨';
       statusDiv.className = 'upload-status success';
-      setTimeout(() => (statusDiv.style.display = 'none'), 5000);
+      statusDiv.style.display = 'block';
     } else {
       statusDiv.style.display = 'none';
     }
   }
 </script>
+</body>
+</html>
