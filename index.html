@@ -22,6 +22,7 @@
       margin: 0;
     }
     @keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
+
     h1 {
       font-family: 'Allura', cursive;
       font-size: 4em;
@@ -29,11 +30,35 @@
       color: #181818;
       text-shadow: 0 2px 6px rgba(60,58,54,0.08), 0 1px 0 #fff;
     }
+
+    .quote,
+    .upload-text,
+    .upload-subtext,
+    .upload-button,
+    .upload-status,
+    .upload-section p,
+    .fallback,
+    .fallback a,
+    footer p {
+      font-family: 'Merriweather', serif;
+    }
+
+    .fallback a {
+      color: #444;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .fallback a:hover {
+      color: #181818;
+    }
+
     .quote { font-style: italic; color: #444; margin-bottom: 25px; }
+
     img {
-      max-width: 90%; border: 3px solid #cbb9a4; border-radius: 16px;
+      max-width: 90%; border: 3px solid #d4c6b5; border-radius: 16px;
       box-shadow: 0 8px 16px rgba(214,208,200,0.13); margin-bottom: 20px;
     }
+
     .upload-section {
       background-color: #f4f1ea;
       padding: 30px;
@@ -42,6 +67,7 @@
       margin: 0 auto 30px auto;
       box-shadow: 0 4px 16px rgba(214,208,200,0.13);
     }
+
     .upload-zone {
       border: 2.5px dashed #e6dac8;
       border-radius: 18px;
@@ -50,17 +76,22 @@
       cursor: pointer;
       transition: all 0.3s ease;
     }
+
     .upload-zone:hover {
       border-color: #c8c2ba;
       transform: translateY(-2px);
       box-shadow: 0 8px 25px rgba(214,208,200,0.13);
     }
+
     .upload-icon { font-size: 2.7em; color: #222; margin-bottom: 15px; }
+
     .upload-text { font-size: 1.2em; font-weight: 700; margin-bottom: 8px; }
+
     .upload-subtext { color: #444; font-size: 1em; margin-bottom: 15px; }
+
     .upload-button {
       background: #e6dac8;
-      color: #fff;
+      color: #000000;
       border: none;
       padding: 15px 40px;
       border-radius: 25px;
@@ -72,11 +103,13 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.08);
       display: block;
     }
+
     .upload-button:hover {
       background: #3f3c38;
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(214,208,200,0.18);
     }
+
     .upload-status {
       margin-top: 15px;
       padding: 12px;
@@ -85,8 +118,19 @@
       font-weight: 600;
       display: none;
     }
-    .upload-status.success { background-color: #f2f7f2; border: 1px solid #bdbdbd; color: #222; }
-    .upload-status.error { background-color: #f7eaea; border: 1px solid #e0e0e0; color: #b71c1c; }
+
+    .upload-status.success {
+      background-color: #f2f7f2;
+      border: 1px solid #bdbdbd;
+      color: #222;
+    }
+
+    .upload-status.error {
+      background-color: #f7eaea;
+      border: 1px solid #e0e0e0;
+      color: #b71c1c;
+    }
+
     .fallback {
       font-size: 1em;
       margin-top: 20px;
@@ -99,12 +143,14 @@
       color: #444;
       box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
+
     footer p {
-      font-size: 1.2em;
+      font-size: 1em;
       font-style: italic;
       color: #181818;
       margin-top: 40px;
     }
+
     @media (max-width: 700px) {
       body { padding: 10px; }
       .upload-section, .fallback { padding: 12px 4px; max-width: 98vw; }
@@ -120,13 +166,13 @@
   <div class="upload-section">
     <p style="font-size: 1.1em; color: #222; margin-bottom: 25px;">
       When you tap below, Google may briefly ask for permission to help you share your photos with us. 
-      It’s fast, safe, and totally private—just like your memories.
+      It’s fast, safe, and totally private - just like your memories.
     </p>
 
     <div class="upload-zone" role="button" tabindex="0" onclick="onApiLoad()">
       <div class="upload-icon">📷</div>
-      <div class="upload-text">Tap here to upload your wedding memories ✨</div>
-      <div class="upload-subtext">Up to 30 photos or videos</div>
+      <div class="upload-text">Tap here to upload your best snaps</div>
+      <div class="upload-subtext">Photos or Videos</div>
     </div>
 
     <button class="upload-button" onclick="onApiLoad()">Upload Photos ✨</button>
@@ -135,7 +181,7 @@
 
   <div class="fallback">
     If you’re having trouble uploading or prefer to email them instead,<br>
-    please send your snaps to:
+    please send your snaps to: 
     <a href="mailto:andrewandaoifegethitched@gmail.com">andrewandaoifegethitched@gmail.com</a>
   </div>
 
@@ -176,8 +222,8 @@
   }
 
   function showPicker() {
-    const picker = new google.picker.PickerBuilder()
-      .addView(google.picker.ViewId.DOCS)
+    const picker = new google.picker.PickerBuilder
+    .addView(google.picker.ViewId.DOCS)
       .setOAuthToken(accessToken)
       .setDeveloperKey(API_KEY)
       .setCallback(pickerCallback)
@@ -193,6 +239,10 @@
     if (data.action === google.picker.Action.PICKED) {
       statusDiv.textContent = 'Upload successful! Want to share more memories? ✨';
       statusDiv.className = 'upload-status success';
+      statusDiv.style.display = 'block';
+    } else if (data.action === google.picker.Action.CANCEL) {
+      statusDiv.textContent = 'Upload cancelled. Feel free to try again anytime.';
+      statusDiv.className = 'upload-status error';
       statusDiv.style.display = 'block';
     } else {
       statusDiv.style.display = 'none';
