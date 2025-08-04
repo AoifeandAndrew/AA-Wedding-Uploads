@@ -3,136 +3,249 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aoife & Andrew's Wedding Uploads</title>
-  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
-  <script src="https://apis.google.com/js/api.js"></script>
+  <title>Aoife and Andrew's Wedding</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
   <style>
     body {
-      font-family: 'Merriweather', Georgia, serif;
-      background: #f4f3f1;
+      font-family: 'Merriweather', Georgia, 'Times New Roman', Times, serif;
+      text-align: center;
+      background: #f4f1ea;
+      padding: 40px;
       color: #181818;
+      position: relative;
+      overflow-x: hidden;
       margin: 0;
-      padding: 0;
+      opacity: 0;
+      animation: fadeIn ease 1.5s forwards;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    h1 {
+      font-family: 'Allura', Arial, sans-serif;
+      font-weight: 300;
+      font-size: 4em;
+      letter-spacing: 0.06em;
+      margin-bottom: 20px;
+      color: #181818;
+      text-transform: none;
+      line-height: 1.1;
+      text-shadow: 0 2px 6px rgba(60, 58, 54, 0.08), 0 1px 0 #fff;
+    }
+    .quote {
+      font-family: 'Merriweather', serif;
+      font-size: 1.2em;
+      font-style: italic;
+      color: #444;
+      margin-bottom: 25px;
+    }
+    img {
+      display: block;
+      margin: 0 auto 20px auto;
+      max-width: 90%;
+      height: auto;
+      border: 3px solid #cbb9a4;
+      border-radius: 16px;
+      box-shadow: 0 8px 16px rgba(214,208,200,0.13);
+    }
+    .upload-section {
+      background-color: #f4f1ea;
+      padding: 30px;
+      border-radius: 16px;
+      max-width: 600px;
+      margin: 0 auto 30px auto;
+      box-shadow: 0 4px 16px rgba(214,208,200,0.13);
+    }
+    .upload-instructions {
+      font-size: 1.2em;
+      margin-bottom: 25px;
+      color: #222;
+    }
+    .upload-zone {
+      border: 2.5px dashed #e6dac8;
+      border-radius: 18px;
+      padding: 38px 18px;
+      background: #faf9f6;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .upload-zone:hover {
+      border-color: #c8c2ba;
+      background: #faf9f6;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(214,208,200,0.13);
+    }
+    .upload-zone.dragover {
+      background: #faf9f6;
+      transform: scale(1.02);
+    }
+    .upload-icon {
+      font-size: 2.7em;
+      color: #222;
+      margin-bottom: 15px;
+      transition: transform 0.3s ease;
+    }
+    .upload-zone:hover .upload-icon {
+      transform: scale(1.1) rotate(3deg);
+    }
+    .upload-text {
+      font-size: 1.2em;
+      color:#181818;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .upload-subtext {
+      color: #444;
+      font-size: 1em;
+      margin-bottom: 15px;
+    }
+    .upload-button {
+      background: #e6dac8;
+      color: #fff;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 25px;
+      font-size: 1.1em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 24px auto 0 auto;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      display: block;
       text-align: center;
     }
-
-    h1 {
-      font-family: 'Allura', cursive;
-      font-size: 2.4em;
-      margin: 24px 12px 8px;
-    }
-
-    .container {
-      margin: 0 auto;
-      padding: 16px 12px;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(214,208,200,0.1);
-      border: 1px solid #d6d0c8;
-      max-width: 90%;
-    }
-
-    .section-title {
-      font-size: 1.2em;
-      margin-top: 16px;
-      margin-bottom: 12px;
-    }
-
-    .upload-zone {
-      border: 2px dashed #c8c2ba;
-      border-radius: 14px;
-      padding: 20px 10px;
-      background: linear-gradient(135deg, #f5f4f2, #eceae7);
-      cursor: pointer;
-      font-size: 1em;
-      color: #3f3c38;
-      margin: 20px 0;
-      box-shadow: 0 1px 4px rgba(214,208,200,0.08);
-      transition: all 0.3s ease;
-    }
-
-    .upload-zone:hover {
-      border-color: #3f3c38;
-      background: linear-gradient(135deg, #eceae7, #f5f4f2);
-      box-shadow: 0 2px 6px rgba(200,194,186,0.13);
-    }
-
-    .upload-zone:focus {
-      outline: none;
-      box-shadow: 0 0 0 2px #c8c2ba;
-    }
-
-    .upload-zone[role="button"] {
-      display: block;
-    }
-
-    button {
-      font-family: inherit;
-      font-size: 1em;
-      border-radius: 8px;
-      border: none;
-      padding: 12px 20px;
+    .upload-button:hover {
       background: #3f3c38;
       color: #fff;
-      cursor: pointer;
-      margin-bottom: 12px;
-      transition: background 0.2s ease;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(214,208,200,0.18);
     }
-
-    button:hover {
-      background: #5c5750;
-      box-shadow: 0 2px 6px rgba(63,60,56,0.2);
+    .upload-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
     }
-
-    .status {
-      margin: 10px 0;
+    .upload-status {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: 600;
+      display: none;
+    }
+    .upload-status.success {
+      background-color: #f2f7f2;
+      color: #222;
+      border: 1px solid #bdbdbd;
+    }
+    .upload-status.error {
+      background-color: #f7eaea;
       color: #b71c1c;
-      font-weight: bold;
-      font-size: 0.95em;
+      border: 1px solid #e0e0e0;
     }
-
-    @media (min-width: 768px) {
-      .container {
-        max-width: 600px;
-        padding: 32px 24px;
+    .fallback {
+      font-size: 1em;
+      margin-top: 20px;
+      background-color: #faf9f6;
+      padding: 15px;
+      border-radius: 12px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      word-break: break-word;
+      color: #444;
+    }
+    .fallback a {
+      color: #181818;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    footer p {
+      font-size: 1.2em;
+      font-style: italic;
+      color: #181818;
+      margin-top: 40px;
+    }
+    @media (max-width: 700px) {
+      body {
+        padding: 10px;
       }
-
+      .upload-section, .fallback {
+        padding: 12px 4px;
+        max-width: 98vw;
+      }
       h1 {
-        font-size: 3em;
-      }
-
-      .upload-zone {
-        font-size: 1.15em;
-        padding: 32px 18px;
+        font-size: 2rem;
       }
     }
   </style>
 </head>
 <body>
-  <h1>Aoife & Andrew's Wedding Uploads</h1>
-  <div class="container">
-    <div class="section-title">Share your photos and videos</div>
-    <div class="upload-zone" role="button" tabindex="0" onclick="onApiLoad('upload')">
-      Tap here to upload your wedding memories ✨
+  <h1>Aoife and Andrew's Wedding</h1>
+  <p class="quote">“To me, you are perfect.”</p>
+  <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
+
+  <div class="upload-section">
+    <div class="upload-instructions">
+      Share your favorite moments from our special day!
     </div>
-    <button onclick="onApiLoad('upload')">Upload Photos or Videos</button>
-    <div class="status" id="status"></div>
+    <div class="upload-zone" role="button" tabindex="0" onclick="onApiLoad()">
+      <div class="upload-icon">📷</div>
+      <div class="upload-text">Tap here to upload your wedding memories ✨</div>
+      <div class="upload-subtext">Up to 30 photos or videos</div>
+    </div>
+    <button class="upload-button" onclick="onApiLoad()">Upload Photos ✨</button>
+    <div class="upload-status" id="uploadStatus"></div>
   </div>
 
+  <div class="fallback">
+    If you’re having trouble uploading or prefer to email them instead,<br>
+    please send your snaps to:
+    <a href="mailto:andrewandaoifegethitched@gmail.com">andrewandaoifegethitched@gmail.com</a>
+  </div>
+
+  <footer>
+    <p>You helped make our day unforgettable.<br>
+    Now let’s make it beautifully shareable.</p>
+  </footer>
+
   <script src="config.js"></script>
+
   <script>
+    // === GOOGLE PICKER INTEGRATION ===
     const CLIENT_ID = '906437362653-i47pjc5s2r281jjjccfib6tg5u0b0jp8.apps.googleusercontent.com';
     const FOLDER_ID = '1zYTWg40hdmPQqJw4-1bAB1kdDSa29pLMEeGz2J6LRYvFUZm5H8WCZ0lyPkivNtoRdmMzRA_z';
     const SCOPES = 'https://www.googleapis.com/auth/drive.file';
-    let oauthToken;
 
-    function onApiLoad(mode) {
+    let oauthToken;
+    const statusDiv = document.getElementById('uploadStatus');
+
+    function onApiLoad() {
+      // Show loading status
+      statusDiv.textContent = 'Preparing to upload...';
+      statusDiv.className = 'upload-status';
+      statusDiv.style.display = 'block';
+
       gapi.load('client:auth2', async () => {
-        await gapi.client.init({ apiKey: API_KEY, clientId: CLIENT_ID, scope: SCOPES });
-        gapi.auth2.getAuthInstance().signIn().then(() => {
-          oauthToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token;
-          if (mode === 'upload') showPicker();
-        });
+        try {
+          await gapi.client.init({ apiKey: API_KEY, clientId: CLIENT_ID, scope: SCOPES });
+          gapi.auth2.getAuthInstance().signIn().then(() => {
+            oauthToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token;
+            showPicker();
+          });
+        } catch (error) {
+          console.error("Error initializing Google API client:", error);
+          statusDiv.textContent = 'Error: Check the browser console for details.';
+          statusDiv.className = 'upload-status error';
+        }
       });
     }
 
@@ -154,9 +267,12 @@
 
     function pickerCallback(data) {
       if (data.action === google.picker.Action.PICKED) {
-        const status = document.getElementById('status');
-        status.textContent = 'Upload successful!';
-        setTimeout(() => status.textContent = '', 3000);
+        statusDiv.textContent = 'Upload successful! Thank you for sharing your memories! ✨';
+        statusDiv.className = 'upload-status success';
+        setTimeout(() => statusDiv.style.display = 'none', 5000);
+      } else if (data.action === google.picker.Action.CANCEL) {
+        // User cancelled the picker
+        statusDiv.style.display = 'none';
       }
     }
   </script>
