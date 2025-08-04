@@ -31,15 +31,7 @@
       text-shadow: 0 2px 6px rgba(60,58,54,0.08), 0 1px 0 #fff;
     }
 
-    .quote,
-    .upload-text,
-    .upload-subtext,
-    .upload-button,
-    .upload-status,
-    .upload-section p,
-    .fallback,
-    .fallback a,
-    footer p {
+    .quote, .upload-text, .upload-subtext, .upload-button, .upload-status, .upload-section p, .fallback, .fallback a, footer p {
       font-family: 'Merriweather', serif;
     }
 
@@ -48,15 +40,16 @@
       text-decoration: none;
       font-weight: 500;
     }
-    .fallback a:hover {
-      color: #181818;
-    }
+    .fallback a:hover { color: #181818; }
 
     .quote { font-style: italic; color: #444; margin-bottom: 25px; }
 
     img {
-      max-width: 90%; border: 3px solid #d4c6b5; border-radius: 16px;
-      box-shadow: 0 8px 16px rgba(214,208,200,0.13); margin-bottom: 20px;
+      max-width: 90%;
+      border: 3px solid #d4c6b5;
+      border-radius: 16px;
+      box-shadow: 0 8px 16px rgba(214,208,200,0.13);
+      margin-bottom: 20px;
     }
 
     .upload-section {
@@ -84,9 +77,7 @@
     }
 
     .upload-icon { font-size: 2.7em; color: #222; margin-bottom: 15px; }
-
     .upload-text { font-size: 1.2em; font-weight: 700; margin-bottom: 8px; }
-
     .upload-subtext { color: #444; font-size: 1em; margin-bottom: 15px; }
 
     .upload-button {
@@ -101,7 +92,7 @@
       transition: all 0.3s ease;
       margin: 24px auto 0 auto;
       box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-      display: block;
+      display: none;
     }
 
     .upload-button:hover {
@@ -163,111 +154,124 @@
   <p class="quote">“To me, you are perfect.”</p>
   <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
 
-    <input
-  type="file"
-  accept="image/*,video/*"
-  multiple
-  id="fileInput"
-  style="display: none;"
-  onchange="handleFiles(this.files)"
-/>
+  <input
+    type="file"
+    accept="image/*,video/*"
+    multiple
+    id="fileInput"
+    style="display: none;"
+    onchange="handleFiles(this.files)"
+  />
 
-<div class="upload-zone" role="button" tabindex="0" onclick="triggerFileInput()">
-  <div class="upload-icon">📷</div>
-  <div class="upload-text">Tap here to upload your best snaps</div>
-  <div class="upload-subtext">Photos or Videos</div>
-</div>
+  <div class="upload-zone" role="button" tabindex="0" onclick="triggerFileInput()">
+    <div class="upload-icon">📷</div>
+    <div class="upload-text">Tap here to upload your best snaps</div>
+    <div class="upload-subtext">Photos or Videos</div>
+  </div>
 
-<div class="upload-status" id="uploadStatus"></div>
+  <button
+    id="startUploadBtn"
+    class="upload-button"
+    onclick="startUploadFlow()"
+  >
+    Upload Selected Files
+  </button>
 
+  <div class="upload-status" id="uploadStatus"></div>
 
   <div class="fallback">
     If you’re having trouble uploading or prefer to email them instead,<br>
-    please send your snaps to: 
+    please send your snaps to:
     <a href="mailto:andrewandaoifegethitched@gmail.com">andrewandaoifegethitched@gmail.com</a>
   </div>
 
   <footer>
-  <p>
-    You helped make our day unforgettable.<br>
-    With love,<br>
-    <span style="font-family:'Allura',cursive;font-size:1.3em;">Aoife & Andrew</span>
-  </p>
-</footer>
+    <p>
+      You helped make our day unforgettable.<br>
+      With love,<br>
+      <span style="font-family:'Allura',cursive;font-size:1.3em;">Aoife & Andrew</span>
+    </p>
+  </footer>
 
-<script>
-  const CLIENT_ID = '906437362653-i47pjc5s2r281jjjccfib6tg5u0b0jp8.apps.googleusercontent.com';
-  const API_KEY = 'AIzaSyCfTabJGnwpdGdVcqeAXAQpXWtVPEcdcaE';
-  const FOLDER_ID = '1zYTWg40hdmPQqJw4-1bAB1kdDSa29pLMEeGz2J6LRYvFUZm5H8WCZ0lyPkivNtoRdmMzRA_z';
-  const SCOPES = 'https://www.googleapis.com/auth/drive.file';
-  const statusDiv = document.getElementById('uploadStatus');
-  let accessToken;
+  <script>
+    const CLIENT_ID = '906437362653-i47pjc5s2r281jjjccfib6tg5u0b0jp8.apps.googleusercontent.com';
+    const API_KEY = 'AIzaSyCfTabJGnwpdGdVcqeAXAQpXWtVPEcdcaE';
+    const FOLDER_ID = '1zYTWg40hdmPQqJw4-1bAB1kdDSa29pLMEeGz2J6LRYvFUZm5H8WCZ0lyPkivNtoRdmMzRA_z';
+    const SCOPES = 'https://www.googleapis.com/auth/drive.file';
+    const statusDiv = document.getElementById('uploadStatus');
+    let accessToken;
+    let selectedFiles = [];
 
-  function triggerFileInput() {
-    document.getElementById('fileInput').click();
-  }
-
-  function handleFiles(files) {
-    if (!accessToken) {
-      requestAccessToken(() => uploadFiles(files));
-    } else {
-      uploadFiles(files);
+    function triggerFileInput() {
+      document.getElementById('fileInput').click();
     }
-  }
 
-  function requestAccessToken(callback) {
-    const tokenClient = google.accounts.oauth2.initTokenClient({
-      client_id: CLIENT_ID,
-      scope: SCOPES,
-      callback: (response) => {
-        if (response.error) {
-          statusDiv.textContent = 'Authorization failed.';
-          statusDiv.className = 'upload-status error';
-        } else {
+    function handleFiles(files) {
+      selectedFiles = files;
+      document.getElementById('startUploadBtn').style.display = 'block';
+    }
+
+    function startUploadFlow() {
+      if (!accessToken) {
+        requestAccessToken(() => uploadFiles(selectedFiles));
+      } else {
+        uploadFiles(selectedFiles);
+      }
+    }
+
+        function requestAccessToken(callback) {
+      const tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: SCOPES,
+        callback: (response) => {
+          if (response.error) {
+            statusDiv.textContent = 'Authorization failed.';
+            statusDiv.className = 'upload-status error';
+            return;
+          }
           accessToken = response.access_token;
           callback();
         }
-      }
-    });
-    tokenClient.requestAccessToken();
-  }
+      });
+      tokenClient.requestAccessToken();
+    }
 
-  async function uploadFiles(files) {
-    statusDiv.textContent = 'Uploading...';
-    statusDiv.className = 'upload-status';
-    statusDiv.style.display = 'block';
+    async function uploadFiles(files) {
+      statusDiv.textContent = 'Uploading...';
+      statusDiv.className = 'upload-status';
+      statusDiv.style.display = 'block';
 
-    for (const file of files) {
-      const metadata = {
-        name: file.name,
-        mimeType: file.type,
-        parents: [FOLDER_ID]
-      };
+      for (const file of files) {
+        const metadata = {
+          name: file.name,
+          mimeType: file.type,
+          parents: [FOLDER_ID]
+        };
 
-      const form = new FormData();
-      form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
-      form.append('file', file);
+        const form = new FormData();
+        form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+        form.append('file', file);
 
-      try {
-        const res = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
-          method: 'POST',
-          headers: new Headers({ Authorization: 'Bearer ' + accessToken }),
-          body: form
-        });
+        try {
+          const res = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
+            method: 'POST',
+            headers: new Headers({ Authorization: 'Bearer ' + accessToken }),
+            body: form
+          });
 
-        if (res.ok) {
-          statusDiv.textContent = 'Upload successful! Want to share more? ✨';
-          statusDiv.className = 'upload-status success';
-        } else {
-          const err = await res.json();
-          throw new Error(err.message);
+          if (res.ok) {
+            statusDiv.textContent = 'Upload successful! Want to share more? ✨';
+            statusDiv.className = 'upload-status success';
+          } else {
+            const err = await res.json();
+            throw new Error(err.message);
+          }
+        } catch (error) {
+          statusDiv.textContent = 'Upload failed: ' + error.message;
+          statusDiv.className = 'upload-status error';
         }
-      } catch (error) {
-        statusDiv.textContent = 'Upload failed: ' + error.message;
-        statusDiv.className = 'upload-status error';
       }
     }
-  }
-</script>
+  </script>
 </body>
 </html>
