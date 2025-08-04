@@ -1,125 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aoife & Andrew's Wedding Uploads Demo</title>
-  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
-  <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
-  <style>
-    body {
-      font-family: 'Merriweather', Georgia, serif;
-      background: #f4f3f1; /* updated background */
-      color: #181818;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
-    h1 {
-      font-family: 'Allura', cursive;
-      font-size: 3em;
-      margin-top: 32px;
-      margin-bottom: 0;
-    }
-    .container {
-      max-width: 700px;
-      margin: 0 auto;
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 4px 16px rgba(214,208,200,0.13);
-      padding: 32px 16px 32px 16px;
-      margin-top: 32px;
-      border: 1px solid #d6d0c8; /* soft taupe border */
-    }
-    .upload-zone {
-      border: 2.5px dashed #c8c2ba;
-      border-radius: 18px;
-      padding: 38px 18px;
-      background: linear-gradient(135deg, #f5f4f2, #eceae7);
-      margin: 32px 0 24px 0;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(214,208,200,0.10);
-      color: #3f3c38;
-      font-size: 1.15em;
-    }
-    .upload-zone:hover {
-      border-color: #3f3c38;
-      background: linear-gradient(135deg, #eceae7, #f5f4f2);
-      box-shadow: 0 4px 16px rgba(200,194,186,0.13);
-    }
-    button {
-      font-family: inherit;
-      font-size: 1.1em;
-      border-radius: 8px;
-      border: none;
-      padding: 12px 24px;
-      margin: 8px 0;
-      background: #3f3c38;
-      color: #fff;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    button:hover {
-      background: #3f3c38; /* updated hover color */
-    }
-    .section-title { font-size: 1.3em; margin-top: 32px; margin-bottom: 8px; }
-    .status { margin: 12px 0; color: #b71c1c; font-weight: bold; }
-    @media (max-width: 700px) {
-      .container { padding: 8px 2px; }
-      .upload-zone { padding: 18px 4px; }
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aoife & Andrew's Wedding Uploads Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
+  <style>
+    body {
+      font-family: 'Merriweather', Georgia, serif;
+      background: #f4f3f1;
+      color: #181818;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    h1 {
+      font-family: 'Allura', cursive;
+      font-size: 3em;
+      margin-top: 32px;
+      margin-bottom: 0;
+    }
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(214,208,200,0.13);
+      padding: 32px 16px 32px 16px;
+      margin-top: 32px;
+      border: 1px solid #d6d0c8;
+    }
+    .upload-zone {
+      border: 2.5px dashed #c8c2ba;
+      border-radius: 18px;
+      padding: 38px 18px;
+      background: linear-gradient(135deg, #f5f4f2, #eceae7);
+      margin: 32px 0 24px 0;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(214,208,200,0.10);
+      color: #3f3c38;
+      font-size: 1.15em;
+    }
+    .upload-zone:hover {
+      border-color: #3f3c38;
+      background: linear-gradient(135deg, #eceae7, #f5f4f2);
+      box-shadow: 0 4px 16px rgba(200,194,186,0.13);
+    }
+    button {
+      font-family: inherit;
+      font-size: 1.1em;
+      border-radius: 8px;
+      border: none;
+      padding: 12px 24px;
+      margin: 8px 0;
+      background: #3f3c38;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #3f3c38;
+    }
+    .section-title { font-size: 1.3em; margin-top: 32px; margin-bottom: 8px; }
+    .status { margin: 12px 0; color: #b71c1c; font-weight: bold; }
+    @media (max-width: 700px) {
+      .container { padding: 8px 2px; }
+      .upload-zone { padding: 18px 4px; }
+    }
+  </style>
 </head>
 <body>
-  <h1>Aoife & Andrew's Wedding Uploads Demo</h1>
-  <div class="container">
-    <div class="section-title">Share your photos and videos</div>
-    <div class="upload-zone" onclick="onApiLoad('upload')">
-      Click here or tap below to upload your wedding photos and videos!
-    </div>
-    <button onclick="onApiLoad('upload')">Upload Photos or Videos</button>
-    <div class="status" id="status"></div>
-  </div>
+  <h1>Aoife & Andrew's Wedding Uploads Demo</h1>
+  <div class="container">
+    <div class="section-title">Share your photos and videos</div>
+    <div class="upload-zone" onclick="onApiLoad('upload')">
+      Click here or tap below to upload your wedding photos and videos!
+    </div>
+    <button onclick="onApiLoad('upload')">Upload Photos or Videos</button>
+    <div class="status" id="status"></div>
+  </div>
+
+<script src="config.js"></script>
 
 <script>
 // === CONFIGURATION ===
-// Replace these with your real values from Google Cloud Console and Drive
-const CLIENT_ID = '906437362653-i47pjc5s2r281jjjccfib6tg5u0b0jp8.apps.googleusercontent.com'; // TODO: Replace
-const API_KEY = 'AIzaSyDw2rO9sJ40vsg0lSp37ue7EgbbMrvYpF4'; // TODO: Replace
-const FOLDER_ID = '1zYTWg40hdmPQqJw4-1bAB1kdDSa29pLMEeGz2J6LRYvFUZm5H8WCZ0lyPkivNtoRdmMzRA_z'; // TODO: Replace
+const CLIENT_ID = '906437362653-i47pjc5s2r281jjjccfib6tg5u0b0jp8.apps.googleusercontent.com';
+// API_KEY is now loaded from the config.js file and is NOT hardcoded here.
+const FOLDER_ID = '1zYTWg40hdmPQqJw4-1bAB1kdDSa29pLMEeGz2J6LRYvFUZm5H8WCZ0lyPkivNtoRdmMzRA_z';
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
 
 // === GOOGLE PICKER & DRIVE API ===
 let oauthToken;
 function onApiLoad(mode) {
-  gapi.load('client:auth2', async () => {
-    await gapi.client.init({ apiKey: API_KEY, clientId: CLIENT_ID, scope: SCOPES });
-    gapi.auth2.getAuthInstance().signIn().then(() => {
-      oauthToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token;
-      if (mode === 'upload') showPicker();
-    });
-  });
+  gapi.load('client:auth2', async () => {
+    await gapi.client.init({ apiKey: API_KEY, clientId: CLIENT_ID, scope: SCOPES });
+    gapi.auth2.getAuthInstance().signIn().then(() => {
+      oauthToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token;
+      if (mode === 'upload') showPicker();
+    });
+  });
 }
 function showPicker() {
-  gapi.load('picker', () => {
-    const picker = new google.picker.PickerBuilder()
-      .addView(google.picker.ViewId.DOCS)
-      .setOAuthToken(oauthToken)
-      .setDeveloperKey(API_KEY)
-      .setCallback(pickerCallback)
-      .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
-      .setSelectableMimeTypes('image/jpeg,image/png,video/mp4')
-      .addView(new google.picker.DocsUploadView().setParent(FOLDER_ID))
-      .setTitle('Upload your wedding photos and videos')
-      .build();
-    picker.setVisible(true);
-  });
+  gapi.load('picker', () => {
+    const picker = new google.picker.PickerBuilder()
+      .addView(google.picker.ViewId.DOCS)
+      .setOAuthToken(oauthToken)
+      .setDeveloperKey(API_KEY)
+      .setCallback(pickerCallback)
+      .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
+      .setSelectableMimeTypes('image/jpeg,image/png,video/mp4')
+      .addView(new google.picker.DocsUploadView().setParent(FOLDER_ID))
+      .setTitle('Upload your wedding photos and videos')
+      .build();
+    picker.setVisible(true);
+  });
 }
 function pickerCallback(data) {
-  if (data.action === google.picker.Action.PICKED) {
-    document.getElementById('status').textContent = 'Upload successful!';
-    setTimeout(() => document.getElementById('status').textContent = '', 3000);
-  }
+  if (data.action === google.picker.Action.PICKED) {
+    document.getElementById('status').textContent = 'Upload successful!';
+    setTimeout(() => document.getElementById('status').textContent = '', 3000);
+  }
 }
 </script>
+</body>
+</html>
