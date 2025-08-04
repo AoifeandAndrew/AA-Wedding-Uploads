@@ -163,21 +163,23 @@
   <p class="quote">“To me, you are perfect.”</p>
   <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
 
-  <div class="upload-section">
-    <p style="font-size: 1.1em; color: #222; margin-bottom: 50px;">
-      When you tap below, Google may briefly ask for permission to help you share your photos with us. 
-      It’s fast, safe, and totally private - just like your memories.
-    </p>
+    <input
+  type="file"
+  accept="image/*,video/*"
+  multiple
+  id="fileInput"
+  style="display: none;"
+  onchange="handleFiles(this.files)"
+/>
 
-    <div class="upload-zone" role="button" tabindex="0" onclick="onApiLoad()">
-      <div class="upload-icon">📷</div>
-      <div class="upload-text">Tap here to upload your best snaps</div>
-      <div class="upload-subtext">Photos or Videos</div>
-    </div>
+<div class="upload-zone" role="button" tabindex="0" onclick="triggerFileInput()">
+  <div class="upload-icon">📷</div>
+  <div class="upload-text">Tap here to upload your best snaps</div>
+  <div class="upload-subtext">Photos or Videos</div>
+</div>
 
-    <button class="upload-button" onclick="onApiLoad()">Upload Photos ✨</button>
-    <div class="upload-status" id="uploadStatus"></div>
-  </div>
+<div class="upload-status" id="uploadStatus"></div>
+
 
   <div class="fallback">
     If you’re having trouble uploading or prefer to email them instead,<br>
@@ -199,74 +201,71 @@
   const FOLDER_ID = '1zYTWg40hdmPQqJw4-1bAB1kdDSa29pLMEeGz2J6LRYvFUZm5H8WCZ0lyPkivNtoRdmMzRA_z';
   const SCOPES = 'https://www.googleapis.com/auth/drive.file';
   const statusDiv = document.getElementById('uploadStatus');
-
   let accessToken;
-  let pickerApiLoaded = false;
 
-  // Load Picker API
-  gapi.load('picker', () => {
-    pickerApiLoaded = true;
-  });
+  function triggerFileInput() {
+    document.getElementById('fileInput').click();
+  }
 
-  function onApiLoad() {
-    statusDiv.textContent = 'Preparing to upload...';
+  function handleFiles(files) {
+    if (!accessToken) {
+      requestAccessToken(() => uploadFiles(files));
+    } else {
+      uploadFiles(files);
+    }
+  }
+
+  function requestAccessToken(callback) {
+    const tokenClient = google.accounts.oauth2.initTokenClient({
+      client_id: CLIENT_ID,
+      scope: SCOPES,
+      callback: (response) => {
+        if (response.error) {
+          statusDiv.textContent = 'Authorization failed.';
+          statusDiv.className = 'upload-status error';
+        } else {
+          accessToken = response.access_token;
+          callback();
+        }
+      }
+    });
+    tokenClient.requestAccessToken();
+  }
+
+  async function uploadFiles(files) {
+    statusDiv.textContent = 'Uploading...';
     statusDiv.className = 'upload-status';
     statusDiv.style.display = 'block';
 
-    // Load client API, then request token
-    gapi.load('client', async () => {
-      await gapi.client.init({ apiKey: API_KEY });
+    for (const file of files) {
+      const metadata = {
+        name: file.name,
+        mimeType: file.type,
+        parents: [FOLDER_ID]
+      };
 
-      const tokenClient = google.accounts.oauth2.initTokenClient({
-        client_id: CLIENT_ID,
-        scope: SCOPES,
-        callback: (response) => {
-          if (response.error) {
-            console.error('Token error:', response);
-            statusDiv.textContent = 'Authorization failed. Please try again.';
-            statusDiv.className = 'upload-status error';
-            return;
-          }
-          accessToken = response.access_token;
-          // Wait for picker to be loaded
-          if (pickerApiLoaded) {
-            setTimeout(showPicker, 200); // slight delay helps avoid popup blockers
-          } else {
-            statusDiv.textContent = 'Still loading upload tools... please try again in a moment.';
-            statusDiv.className = 'upload-status error';
-          }
-        },
-      });
+      const form = new FormData();
+      form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+      form.append('file', file);
 
-      tokenClient.requestAccessToken();
-    });
-  }
+      try {
+        const res = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
+          method: 'POST',
+          headers: new Headers({ Authorization: 'Bearer ' + accessToken }),
+          body: form
+        });
 
-  function showPicker() {
-    const picker = new google.picker.PickerBuilder()
-      .addView(google.picker.ViewId.DOCS)
-      .setOAuthToken(accessToken)
-      .setDeveloperKey(API_KEY)
-      .setCallback(pickerCallback)
-      .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
-      .setSelectableMimeTypes('image/jpeg,image/png,video/mp4')
-      .addView(new google.picker.DocsUploadView().setParent(FOLDER_ID))
-      .setTitle('Upload your wedding photos and videos')
-      .build();
-    picker.setVisible(true);
-  }
-
-  function pickerCallback(data) {
-    if (data.action === google.picker.Action.PICKED) {
-      statusDiv.textContent = 'Upload successful! Want to share more memories? ✨';
-      statusDiv.className = 'upload-status success';
-      statusDiv.style.display = 'block';
-    } else if (data.action === google.picker.Action.CANCEL) {
-      statusDiv.textContent = 'Upload cancelled. Feel free to try again anytime.';
-      statusDiv.className = 'upload-status error';
-      statusDiv.style.display = 'block';
-    } else {
-      statusDiv.style.display = 'none';
+        if (res.ok) {
+          statusDiv.textContent = 'Upload successful! Want to share more? ✨';
+          statusDiv.className = 'upload-status success';
+        } else {
+          const err = await res.json();
+          throw new Error(err.message);
+        }
+      } catch (error) {
+        statusDiv.textContent = 'Upload failed: ' + error.message;
+        statusDiv.className = 'upload-status error';
+      }
     }
   }
 </script>
