@@ -35,20 +35,28 @@ async function handleRequest(request, event) {
       return new Response(JSON.stringify({ error: "Invalid file type. Allowed: JPEG, PNG, HEIC, MP4" }), { status: 400, headers: corsHeaders });
     }
     const uniqueName = `${Date.now()}-${Math.random().toString(36).slice(2)}-${filename}`;
+
+    // Determine content-type based on extension
+    let contentType = "application/octet-stream";
+    if (extension === "jpg" || extension === "jpeg") contentType = "image/jpeg";
+    else if (extension === "png") contentType = "image/png";
+    else if (extension === "heic") contentType = "image/heic";
+    else if (extension === "mp4") contentType = "video/mp4";
+
     let url;
     try {
-      url = await generatePresignedUrl(env, uniqueName);
+      url = await generatePresignedUrl(env, uniqueName, contentType);
     } catch (err) {
       return new Response(JSON.stringify({ error: "Failed to generate presigned URL" }), { status: 500, headers: corsHeaders });
     }
-    return new Response(JSON.stringify({ url }), { status: 200, headers: corsHeaders });
+    return new Response(JSON.stringify({ url, contentType }), { status: 200, headers: corsHeaders });
   }
 
   return new Response(JSON.stringify({ error: "Method Not Allowed" }), { status: 405, headers: corsHeaders });
 }
 
 // AWS Signature V4 for R2 PUT
-async function generatePresignedUrl(env, key) {
+async function generatePresignedUrl(env, key, contentType) {
   const encoder = new TextEncoder();
   function toHex(buffer) {
     return [...new Uint8Array(buffer)].map(b => b.toString(16).padStart(2, "0")).join("");
@@ -74,7 +82,7 @@ async function generatePresignedUrl(env, key) {
   const dateStamp = amzDate.slice(0, 8);
   const credentialScope = `${dateStamp}/${env.R2_REGION}/s3/aws4_request`;
   const algorithm = "AWS4-HMAC-SHA256";
-  const signedHeaders = "host";
+  const signedHeaders = "host;content-type";
   const canonicalUri = `/${env.R2_BUCKET_NAME}/${key}`;
   const canonicalQuery = [
     `X-Amz-Algorithm=${algorithm}`,
@@ -83,7 +91,7 @@ async function generatePresignedUrl(env, key) {
     `X-Amz-Expires=900`,
     `X-Amz-SignedHeaders=${signedHeaders}`
   ].join("&");
-  const canonicalHeaders = `host:${host}\n`;
+  const canonicalHeaders = `host:${host}\ncontent-type:${contentType}\n`;
   const payloadHash = "UNSIGNED-PAYLOAD";
   const canonicalRequest = [
     method,
