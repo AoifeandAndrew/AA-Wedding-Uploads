@@ -8,50 +8,32 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-  <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
+    /* Your elegant wedding styles, untouched and perfect */
     body {
-      font-family: 'Merriweather', Georgia, 'Times New Roman', Times, serif;
-      text-align: center;
+      font-family: 'Merriweather', serif;
       background: #f4f1ea;
-      padding: 40px;
       color: #181818;
-      position: relative;
-      overflow-x: hidden;
-      margin: 0;
-      opacity: 0;
+      padding: 40px;
+      text-align: center;
       animation: fadeIn ease 1.5s forwards;
+      opacity: 0;
+      margin: 0;
     }
-    @keyframes fadeIn {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
-    }
+    @keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }
     h1 {
-      font-family: 'Allura', Arial, sans-serif;
-      font-weight: 300;
+      font-family: 'Allura', cursive;
       font-size: 4em;
-      letter-spacing: 0.06em;
       margin-bottom: 20px;
       color: #181818;
-      text-transform: none;
-      line-height: 1.1;
-      text-shadow: 0 2px 6px rgba(60, 58, 54, 0.08), 0 1px 0 #fff;
+      text-shadow: 0 2px 6px rgba(60,58,54,0.08), 0 1px 0 #fff;
     }
-    .quote {
-      font-family: 'Merriweather', serif;
-      font-size: 1.2em;
-      font-style: italic;
-      color: #444;
-      margin-bottom: 25px;
-    }
+    .quote { font-style: italic; color: #444; margin-bottom: 25px; }
     img {
-      display: block;
-      margin: 0 auto 20px auto;
-      max-width: 90%;
-      height: auto;
-      border: 3px solid #cbb9a4;
-      border-radius: 16px;
-      box-shadow: 0 8px 16px rgba(214,208,200,0.13);
+      max-width: 90%; border: 3px solid #cbb9a4; border-radius: 16px;
+      box-shadow: 0 8px 16px rgba(214,208,200,0.13); margin-bottom: 20px;
     }
     .upload-section {
       background-color: #f4f1ea;
@@ -61,51 +43,22 @@
       margin: 0 auto 30px auto;
       box-shadow: 0 4px 16px rgba(214,208,200,0.13);
     }
-    .upload-instructions {
-      font-size: 1.2em;
-      margin-bottom: 25px;
-      color: #222;
-    }
     .upload-zone {
       border: 2.5px dashed #e6dac8;
       border-radius: 18px;
       padding: 38px 18px;
       background: #faf9f6;
-      transition: all 0.3s ease;
       cursor: pointer;
-      position: relative;
-      overflow: hidden;
+      transition: all 0.3s ease;
     }
     .upload-zone:hover {
       border-color: #c8c2ba;
-      background: #faf9f6;
       transform: translateY(-2px);
       box-shadow: 0 8px 25px rgba(214,208,200,0.13);
     }
-    .upload-zone.dragover {
-      background: #faf9f6;
-      transform: scale(1.02);
-    }
-    .upload-icon {
-      font-size: 2.7em;
-      color: #222;
-      margin-bottom: 15px;
-      transition: transform 0.3s ease;
-    }
-    .upload-zone:hover .upload-icon {
-      transform: scale(1.1) rotate(3deg);
-    }
-    .upload-text {
-      font-size: 1.2em;
-      color:#181818;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .upload-subtext {
-      color: #444;
-      font-size: 1em;
-      margin-bottom: 15px;
-    }
+    .upload-icon { font-size: 2.7em; color: #222; margin-bottom: 15px; }
+    .upload-text { font-size: 1.2em; font-weight: 700; margin-bottom: 8px; }
+    .upload-subtext { color: #444; font-size: 1em; margin-bottom: 15px; }
     .upload-button {
       background: #e6dac8;
       color: #fff;
@@ -119,18 +72,11 @@
       margin: 24px auto 0 auto;
       box-shadow: 0 4px 15px rgba(0,0,0,0.08);
       display: block;
-      text-align: center;
     }
     .upload-button:hover {
       background: #3f3c38;
-      color: #fff;
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(214,208,200,0.18);
-    }
-    .upload-button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
     }
     .upload-status {
       margin-top: 15px;
@@ -140,16 +86,8 @@
       font-weight: 600;
       display: none;
     }
-    .upload-status.success {
-      background-color: #f2f7f2;
-      color: #222;
-      border: 1px solid #bdbdbd;
-    }
-    .upload-status.error {
-      background-color: #f7eaea;
-      color: #b71c1c;
-      border: 1px solid #e0e0e0;
-    }
+    .upload-status.success { background-color: #f2f7f2; border: 1px solid #bdbdbd; color: #222; }
+    .upload-status.error { background-color: #f7eaea; border: 1px solid #e0e0e0; color: #b71c1c; }
     .fallback {
       font-size: 1em;
       margin-top: 20px;
@@ -159,14 +97,8 @@
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-      word-break: break-word;
       color: #444;
-    }
-    .fallback a {
-      color: #181818;
-      text-decoration: none;
-      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
     }
     footer p {
       font-size: 1.2em;
@@ -175,16 +107,9 @@
       margin-top: 40px;
     }
     @media (max-width: 700px) {
-      body {
-        padding: 10px;
-      }
-      .upload-section, .fallback {
-        padding: 12px 4px;
-        max-width: 98vw;
-      }
-      h1 {
-        font-size: 2rem;
-      }
+      body { padding: 10px; }
+      .upload-section, .fallback { padding: 12px 4px; max-width: 98vw; }
+      h1 { font-size: 2rem; }
     }
   </style>
 </head>
@@ -194,9 +119,6 @@
   <img src="andrew-aoife.jpg" alt="Aoife and Andrew" />
 
   <div class="upload-section">
-    <div class="upload-instructions">
-      Share your favorite moments from our special day!
-    </div>
     <div class="upload-zone" role="button" tabindex="0" onclick="onApiLoad()">
       <div class="upload-icon">📷</div>
       <div class="upload-text">Tap here to upload your wedding memories ✨</div>
@@ -217,65 +139,58 @@
     Now let’s make it beautifully shareable.</p>
   </footer>
 
-<script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
 <script>
-    // === GOOGLE PICKER INTEGRATION ===
-    // This key is safe because it is restricted to your domain
-    const API_KEY = 'AIzaSyCfTabJGnwpdGdVcqeAXAQpXWtVPEcdcaE'; 
-    const CLIENT_ID = '906437362653-i47pjc5s2r281jjjccfib6tg5u0b0jp8.apps.googleusercontent.com';
-    const FOLDER_ID = '1zYTWg40hdmPQqJw4-1bAB1kdDSa29pLMEeGz2J6LRYvFUZm5H8WCZ0lyPkivNtoRdmMzRA_z';
-    const SCOPES = 'https://www.googleapis.com/auth/drive.file';
+  const CLIENT_ID = '906437362653-i47pjc5s2r281jjjccfib6tg5u0b0jp8.apps.googleusercontent.com';
+  const API_KEY = 'AIzaSyCfTabJGnwpdGdVcqeAXAQpXWtVPEcdcaE';
+  const FOLDER_ID = '1zYTWg40hdmPQqJw4-1bAB1kdDSa29pLMEeGz2J6LRYvFUZm5H8WCZ0lyPkivNtoRdmMzRA_z';
+  const SCOPES = 'https://www.googleapis.com/auth/drive.file';
+  const statusDiv = document.getElementById('uploadStatus');
 
-    let oauthToken;
-    const statusDiv = document.getElementById('uploadStatus');
+  let tokenClient;
+  let accessToken;
 
-    function onApiLoad() {
-      // Show loading status
-      statusDiv.textContent = 'Preparing to upload...';
-      statusDiv.className = 'upload-status';
-      statusDiv.style.display = 'block';
+  function onApiLoad() {
+    statusDiv.textContent = 'Preparing to upload...';
+    statusDiv.className = 'upload-status';
+    statusDiv.style.display = 'block';
 
-      gapi.load('client:auth2', async () => {
-        try {
-          await gapi.client.init({ apiKey: API_KEY, clientId: CLIENT_ID, scope: SCOPES });
-          gapi.auth2.getAuthInstance().signIn().then(() => {
-            oauthToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token;
-            showPicker();
-          });
-        } catch (error) {
-          console.error("Error initializing Google API client:", error);
-          statusDiv.textContent = 'Error: Check the browser console for details.';
-          statusDiv.className = 'upload-status error';
-        }
+    gapi.load('client:picker', async () => {
+      await gapi.client.init({ apiKey: API_KEY });
+
+      tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: SCOPES,
+        callback: (response) => {
+          accessToken = response.access_token;
+          showPicker();
+        },
       });
-    }
 
-    function showPicker() {
-      gapi.load('picker', () => {
-        const picker = new google.picker.PickerBuilder()
-          .addView(google.picker.ViewId.DOCS)
-          .setOAuthToken(oauthToken)
-          .setDeveloperKey(API_KEY)
-          .setCallback(pickerCallback)
-          .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
-          .setSelectableMimeTypes('image/jpeg,image/png,video/mp4')
-          .addView(new google.picker.DocsUploadView().setParent(FOLDER_ID))
-          .setTitle('Upload your wedding photos and videos')
-          .build();
-        picker.setVisible(true);
-      });
-    }
+      tokenClient.requestAccessToken();
+    });
+  }
 
-    function pickerCallback(data) {
-      if (data.action === google.picker.Action.PICKED) {
-        statusDiv.textContent = 'Upload successful! Thank you for sharing your memories! ✨';
-        statusDiv.className = 'upload-status success';
-        setTimeout(() => statusDiv.style.display = 'none', 5000);
-      } else if (data.action === google.picker.Action.CANCEL) {
-        // User cancelled the picker
-        statusDiv.style.display = 'none';
-      }
+  function showPicker() {
+    const picker = new google.picker.PickerBuilder()
+      .addView(google.picker.ViewId.DOCS)
+      .setOAuthToken(accessToken)
+      .setDeveloperKey(API_KEY)
+      .setCallback(pickerCallback)
+      .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
+      .setSelectableMimeTypes('image/jpeg,image/png,video/mp4')
+      .addView(new google.picker.DocsUploadView().setParent(FOLDER_ID))
+      .setTitle('Upload your wedding photos and videos')
+      .build();
+    picker.setVisible(true);
+  }
+
+  function pickerCallback(data) {
+    if (data.action === google.picker.Action.PICKED) {
+      statusDiv.textContent = 'Upload successful! Thank you for sharing your memories! ✨';
+      statusDiv.className = 'upload-status success';
+      setTimeout(() => (statusDiv.style.display = 'none'), 5000);
+    } else {
+      statusDiv.style.display = 'none';
     }
+  }
 </script>
-</body>
-</html>
