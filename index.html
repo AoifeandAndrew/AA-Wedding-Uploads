@@ -124,6 +124,54 @@
 
     .file-preview {
       animation: fadeSlideIn 0.6s ease forwards;
+      box-sizing: border-box;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 10px 0;
+      border: 1px solid #e6dac8;
+      border-radius: 12px;
+      padding: 12px 8px;
+      background-color: #faf9f6;
+    }
+
+    .file-info-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      width: 100%;
+    }
+
+    .file-info-row img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #d4c6b5;
+    }
+
+    .file-info-row span {
+      font-weight: 600;
+      font-size: 0.95em;
+      color: #333;
+      word-break: break-all;
+      max-width: 180px;
+      text-align: center;
+    }
+
+    .file-info-row button {
+      background: none;
+      border: none;
+      color: #b71c1c;
+      font-size: 1.2em;
+      cursor: pointer;
+      margin-left: 0;
+      margin-right: 0;
+      padding: 0 4px;
+      align-self: flex-start;
     }
 
     @keyframes fadeSlideIn {
@@ -132,19 +180,14 @@
     }
 
     .progress-bar {
-  width: 100%;
-  height: 6px;
-  background-color: #e6dac8;
-  border-radius: 4px;
-  margin-top: 8px;
-  overflow: hidden;
-  box-sizing: border-box; /* Add this line */
-  }
-
-.file-preview {
-  box-sizing: border-box; /* Add this line */
-  width: 100%;            /* Add this line */
-}
+      width: 100%;
+      height: 6px;
+      background-color: #e6dac8;
+      border-radius: 4px;
+      margin-top: 10px;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
 
     .progress-fill {
       height: 100%;
@@ -223,82 +266,49 @@
         return;
       }
 
-      // Show the upload button when files are selected
-  document.getElementById('startUploadBtn').style.display = 'block';
+      document.getElementById('startUploadBtn').style.display = 'block';
 
       selectedFiles.forEach((file, index) => {
-  const preview = document.createElement('div');
-  preview.classList.add('file-preview');
-  preview.id = `preview-${index}`;
-  preview.style.margin = '10px 0';
-  preview.style.display = 'flex';
-  preview.style.alignItems = 'center';
-  preview.style.justifyContent = 'space-between';
-  preview.style.border = '1px solid #e6dac8';
-  preview.style.borderRadius = '12px';
-  preview.style.padding = '8px 12px';
-  preview.style.backgroundColor = '#faf9f6';
-  preview.style.flexDirection = 'column'; // Add this line
-  preview.style.width = '100%';           // Add this line
+        const preview = document.createElement('div');
+        preview.className = 'file-preview';
+        preview.id = `preview-${index}`;
 
-  const fileDetails = document.createElement('div');
-  fileDetails.style.display = 'flex';
-  fileDetails.style.flexDirection = 'column';
-  fileDetails.style.alignItems = 'flex-start';
-  fileDetails.style.gap = '6px';
+        // Info row: thumbnail, filename, remove button
+        const fileDetails = document.createElement('div');
+        fileDetails.className = 'file-info-row';
 
-  const infoRow = document.createElement('div');
-  infoRow.style.display = 'flex';
-  infoRow.style.alignItems = 'center';
-  infoRow.style.gap = '12px';
+        const thumb = document.createElement('img');
+        if (file.type.startsWith('image/')) {
+          thumb.src = URL.createObjectURL(file);
+        } else {
+          thumb.src = 'video-icon-placeholder.png'; // fallback icon
+        }
 
-  const thumb = document.createElement('img');
-  thumb.style.width = '60px';
-  thumb.style.height = '60px';
-  thumb.style.objectFit = 'cover';
-  thumb.style.borderRadius = '8px';
-  thumb.style.border = '1px solid #d4c6b5';
+        const fileName = document.createElement('span');
+        fileName.textContent = file.name;
 
-  if (file.type.startsWith('image/')) {
-    thumb.src = URL.createObjectURL(file);
-  } else {
-    thumb.src = 'video-icon-placeholder.png'; // fallback icon
-  }
+        const removeBtn = document.createElement('button');
+        removeBtn.innerHTML = '❌';
+        removeBtn.setAttribute('aria-label', 'Remove file');
+        removeBtn.onclick = () => removeFile(index);
 
-  const fileName = document.createElement('span');
-  fileName.textContent = file.name;
-  fileName.style.fontWeight = '600';
-  fileName.style.fontSize = '0.95em';
-  fileName.style.color = '#333';
+        fileDetails.appendChild(thumb);
+        fileDetails.appendChild(fileName);
+        fileDetails.appendChild(removeBtn);
 
-  const progressBar = document.createElement('div');
-  progressBar.className = 'progress-bar';
-  const progressFill = document.createElement('div');
-  progressFill.className = 'progress-fill';
-  progressFill.id = `progress-${index}`;
-  progressBar.appendChild(progressFill);
+        // Progress bar
+        const progressBar = document.createElement('div');
+        progressBar.className = 'progress-bar';
+        const progressFill = document.createElement('div');
+        progressFill.className = 'progress-fill';
+        progressFill.id = `progress-${index}`;
+        progressBar.appendChild(progressFill);
 
-  const removeBtn = document.createElement('button');
-  removeBtn.innerHTML = '❌';
-  removeBtn.setAttribute('aria-label', 'Remove file');
-  removeBtn.style.background = 'none';
-  removeBtn.style.border = 'none';
-  removeBtn.style.color = '#b71c1c';
-  removeBtn.style.fontSize = '1.2em';
-  removeBtn.style.cursor = 'pointer';
-  removeBtn.style.marginLeft = '12px';
-  removeBtn.onclick = () => removeFile(index);
-
-  infoRow.appendChild(thumb);
-  infoRow.appendChild(fileName);
-  infoRow.appendChild(removeBtn);
-
-  fileDetails.appendChild(infoRow);
-  fileDetails.appendChild(progressBar);
-
-  preview.appendChild(fileDetails);
-  container.appendChild(preview);
-});}
+        preview.appendChild(fileDetails);
+        preview.appendChild(progressBar);
+        container.appendChild(preview);
+      });
+    }
 
     function startUploadFlow() {
       if (!accessToken) {
@@ -375,4 +385,3 @@
     }
   </script>
 </body>
-</html>
