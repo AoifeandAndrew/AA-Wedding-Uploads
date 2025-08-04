@@ -217,6 +217,9 @@
         return;
       }
 
+      // Show the upload button when files are selected
+  document.getElementById('startUploadBtn').style.display = 'block';
+
       selectedFiles.forEach((file, index) => {
   const preview = document.createElement('div');
   preview.classList.add('file-preview');
