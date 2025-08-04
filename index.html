@@ -217,10 +217,11 @@
     Now let’s make it beautifully shareable.</p>
   </footer>
 
-  <script src="config.js"></script>
-  
-  <script>
+<script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
+<script>
     // === GOOGLE PICKER INTEGRATION ===
+    // This key is safe because it is restricted to your domain
+    const API_KEY = 'AIzaSyCfTabJGnwpdGdVcqeAXAQpXWtVPEcdcaE'; 
     const CLIENT_ID = '906437362653-i47pjc5s2r281jjjccfib6tg5u0b0jp8.apps.googleusercontent.com';
     const FOLDER_ID = '1zYTWg40hdmPQqJw4-1bAB1kdDSa29pLMEeGz2J6LRYvFUZm5H8WCZ0lyPkivNtoRdmMzRA_z';
     const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -275,6 +276,6 @@
         statusDiv.style.display = 'none';
       }
     }
-  </script>
+</script>
 </body>
 </html>
