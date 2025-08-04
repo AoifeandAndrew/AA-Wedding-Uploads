@@ -45,18 +45,18 @@ async function handleRequest(request, event) {
 
     let url;
     try {
-      url = await generatePresignedUrl(env, uniqueName, contentType);
+      url = await generatePresignedUrl(env, uniqueName);
     } catch (err) {
       return new Response(JSON.stringify({ error: "Failed to generate presigned URL" }), { status: 500, headers: corsHeaders });
     }
-    return new Response(JSON.stringify({ url, contentType }), { status: 200, headers: corsHeaders });
+    return new Response(JSON.stringify({ url }), { status: 200, headers: corsHeaders });
   }
 
   return new Response(JSON.stringify({ error: "Method Not Allowed" }), { status: 405, headers: corsHeaders });
 }
 
 // AWS Signature V4 for R2 PUT
-async function generatePresignedUrl(env, key, contentType) {
+async function generatePresignedUrl(env, key) {
   const encoder = new TextEncoder();
   function toHex(buffer) {
     return [...new Uint8Array(buffer)].map(b => b.toString(16).padStart(2, "0")).join("");
@@ -82,7 +82,7 @@ async function generatePresignedUrl(env, key, contentType) {
   const dateStamp = amzDate.slice(0, 8);
   const credentialScope = `${dateStamp}/${env.R2_REGION}/s3/aws4_request`;
   const algorithm = "AWS4-HMAC-SHA256";
-  const signedHeaders = "host;content-type";
+  const signedHeaders = "host";
   const canonicalUri = `/${env.R2_BUCKET_NAME}/${key}`;
   const canonicalQuery = [
     `X-Amz-Algorithm=${algorithm}`,
@@ -91,7 +91,7 @@ async function generatePresignedUrl(env, key, contentType) {
     `X-Amz-Expires=900`,
     `X-Amz-SignedHeaders=${signedHeaders}`
   ].join("&");
-  const canonicalHeaders = `host:${host}\ncontent-type:${contentType}\n`;
+  const canonicalHeaders = `host:${host}\n`;
   const payloadHash = "UNSIGNED-PAYLOAD";
   const canonicalRequest = [
     method,
