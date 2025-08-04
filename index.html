@@ -132,13 +132,19 @@
     }
 
     .progress-bar {
-      width: 100%;
-      height: 6px;
-      background-color: #e6dac8;
-      border-radius: 4px;
-      margin-top: 8px;
-      overflow: hidden;
-    }
+  width: 100%;
+  height: 6px;
+  background-color: #e6dac8;
+  border-radius: 4px;
+  margin-top: 8px;
+  overflow: hidden;
+  box-sizing: border-box; /* Add this line */
+  }
+
+.file-preview {
+  box-sizing: border-box; /* Add this line */
+  width: 100%;            /* Add this line */
+}
 
     .progress-fill {
       height: 100%;
@@ -232,6 +238,8 @@
   preview.style.borderRadius = '12px';
   preview.style.padding = '8px 12px';
   preview.style.backgroundColor = '#faf9f6';
+  preview.style.flexDirection = 'column'; // Add this line
+  preview.style.width = '100%';           // Add this line
 
   const fileDetails = document.createElement('div');
   fileDetails.style.display = 'flex';
