@@ -147,6 +147,21 @@
       .upload-section, .fallback { padding: 12px 4px; max-width: 98vw; }
       h1 { font-size: 2rem; }
     }
+
+    @keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.file-preview {
+  animation: fadeSlideIn 0.6s ease forwards;
+}
   </style>
 </head>
 <body>
@@ -168,6 +183,9 @@
     <div class="upload-text">Tap here to upload your best snaps</div>
     <div class="upload-subtext">Photos or Videos</div>
   </div>
+
+  <div id="filePreviewContainer" style="margin-top: 20px;"></div>
+
 
   <button
     id="startUploadBtn"
@@ -207,9 +225,80 @@
     }
 
     function handleFiles(files) {
-      selectedFiles = files;
-      document.getElementById('startUploadBtn').style.display = 'block';
+  selectedFiles = Array.from(files);
+  renderFilePreviews();
+}
+
+function removeFile(index) {
+  selectedFiles.splice(index, 1);
+  renderFilePreviews();
+}
+
+function renderFilePreviews() {
+  const container = document.getElementById('filePreviewContainer');
+  container.innerHTML = '';
+
+  if (selectedFiles.length === 0) {
+    document.getElementById('startUploadBtn').style.display = 'none';
+    return;
+  }
+
+  selectedFiles.forEach((file, index) => {
+    const preview = document.createElement('div');
+preview.classList.add('file-preview'); // ✨ enables fadeSlideIn animation
+preview.style.margin = '10px 0';
+    preview.style.display = 'flex';
+    preview.style.alignItems = 'center';
+    preview.style.justifyContent = 'space-between';
+    preview.style.border = '1px solid #e6dac8';
+    preview.style.borderRadius = '12px';
+    preview.style.padding = '8px 12px';
+    preview.style.backgroundColor = '#faf9f6';
+
+    const fileDetails = document.createElement('div');
+    fileDetails.style.display = 'flex';
+    fileDetails.style.alignItems = 'center';
+    fileDetails.style.gap = '12px';
+
+    const thumb = document.createElement('img');
+    thumb.style.width = '60px';
+    thumb.style.height = '60px';
+    thumb.style.objectFit = 'cover';
+    thumb.style.borderRadius = '8px';
+    thumb.style.border = '1px solid #d4c6b5';
+
+    if (file.type.startsWith('image/')) {
+      thumb.src = URL.createObjectURL(file);
+    } else {
+      thumb.src = 'video-icon-placeholder.png'; // Replace with your fallback icon if desired
     }
+
+    const fileName = document.createElement('span');
+    fileName.textContent = file.name;
+    fileName.style.fontWeight = '600';
+    fileName.style.fontSize = '0.95em';
+    fileName.style.color = '#333';
+
+    const removeBtn = document.createElement('button');
+removeBtn.innerHTML = '❌';
+removeBtn.setAttribute('aria-label', 'Remove file');
+removeBtn.style.background = 'none';
+removeBtn.style.border = 'none';
+removeBtn.style.color = '#b71c1c';
+removeBtn.style.fontSize = '1.2em';
+removeBtn.style.cursor = 'pointer';
+removeBtn.style.marginLeft = '12px';
+removeBtn.onclick = () => removeFile(index);
+
+    fileDetails.appendChild(thumb);
+    fileDetails.appendChild(fileName);
+    preview.appendChild(fileDetails);
+    preview.appendChild(removeBtn);
+    container.appendChild(preview);
+  });
+
+  document.getElementById('startUploadBtn').style.display = 'block';
+}
 
     function startUploadFlow() {
       if (!accessToken) {
