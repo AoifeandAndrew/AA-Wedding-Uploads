@@ -200,23 +200,41 @@
   const SCOPES = 'https://www.googleapis.com/auth/drive.file';
   const statusDiv = document.getElementById('uploadStatus');
 
-  let tokenClient;
   let accessToken;
+  let pickerApiLoaded = false;
+
+  // Load Picker API
+  gapi.load('picker', () => {
+    pickerApiLoaded = true;
+  });
 
   function onApiLoad() {
     statusDiv.textContent = 'Preparing to upload...';
     statusDiv.className = 'upload-status';
     statusDiv.style.display = 'block';
 
-    gapi.load('client:picker', async () => {
+    // Load client API, then request token
+    gapi.load('client', async () => {
       await gapi.client.init({ apiKey: API_KEY });
 
-      tokenClient = google.accounts.oauth2.initTokenClient({
+      const tokenClient = google.accounts.oauth2.initTokenClient({
         client_id: CLIENT_ID,
         scope: SCOPES,
         callback: (response) => {
+          if (response.error) {
+            console.error('Token error:', response);
+            statusDiv.textContent = 'Authorization failed. Please try again.';
+            statusDiv.className = 'upload-status error';
+            return;
+          }
           accessToken = response.access_token;
-          showPicker();
+          // Wait for picker to be loaded
+          if (pickerApiLoaded) {
+            setTimeout(showPicker, 200); // slight delay helps avoid popup blockers
+          } else {
+            statusDiv.textContent = 'Still loading upload tools... please try again in a moment.';
+            statusDiv.className = 'upload-status error';
+          }
         },
       });
 
@@ -225,8 +243,8 @@
   }
 
   function showPicker() {
-    const picker = new google.picker.PickerBuilder
-    .addView(google.picker.ViewId.DOCS)
+    const picker = new google.picker.PickerBuilder()
+      .addView(google.picker.ViewId.DOCS)
       .setOAuthToken(accessToken)
       .setDeveloperKey(API_KEY)
       .setCallback(pickerCallback)
